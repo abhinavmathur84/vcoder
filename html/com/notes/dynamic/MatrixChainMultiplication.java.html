@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>MatrixChainMultiplication.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MatrixChainMultiplication.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.notes.dynamic; 
+<a name="l2"><span class="ln">2    </span></a> 
+<a name="l3"><span class="ln">3    </span></a> 
+<a name="l4"><span class="ln">4    </span></a></span><span class="s2">/** 
+<a name="l5"><span class="ln">5    </span></a> * Given an array p[] which represents the chain of matrices 
+<a name="l6"><span class="ln">6    </span></a> * such that the ith matrix Ai is of dimension p[i-1] x p[i]. 
+<a name="l7"><span class="ln">7    </span></a> * We need to write a function MatrixChainOrder() that should 
+<a name="l8"><span class="ln">8    </span></a> * return the minimum number of multiplications needed to multiply 
+<a name="l9"><span class="ln">9    </span></a> * the chain. 
+<a name="l10"><span class="ln">10   </span></a> */</span><span class="s1"> 
+<a name="l11"><span class="ln">11   </span></a></span><span class="s0">public class </span><span class="s1">MatrixChainMultiplication { 
+<a name="l12"><span class="ln">12   </span></a> 
+<a name="l13"><span class="ln">13   </span></a>    </span><span class="s2">//we have A1....An</span><span class="s1"> 
+<a name="l14"><span class="ln">14   </span></a>    </span><span class="s2">//dimension of Ai is p[i-1]*p[i]</span><span class="s1"> 
+<a name="l15"><span class="ln">15   </span></a>    </span><span class="s2">// dimension of A1...An-1   p[0]*p[n-1]</span><span class="s1"> 
+<a name="l16"><span class="ln">16   </span></a>    </span><span class="s0">int</span><span class="s1">[] p; 
+<a name="l17"><span class="ln">17   </span></a>    String[] matrix; 
+<a name="l18"><span class="ln">18   </span></a> 
+<a name="l19"><span class="ln">19   </span></a>    </span><span class="s0">int</span><span class="s1">[][] M; 
+<a name="l20"><span class="ln">20   </span></a>    String[][] sols; 
+<a name="l21"><span class="ln">21   </span></a> 
+<a name="l22"><span class="ln">22   </span></a>    </span><span class="s2">//Approach</span><span class="s1"> 
+<a name="l23"><span class="ln">23   </span></a> 
+<a name="l24"><span class="ln">24   </span></a>    </span><span class="s2">/** 
+<a name="l25"><span class="ln">25   </span></a>     * M[i][j] = minimum number of multiplications required to multiply Ai...Aj 
+<a name="l26"><span class="ln">26   </span></a>     * T = Ai......Aj of dimension p[i-1]*p[j] 
+<a name="l27"><span class="ln">27   </span></a>     * T1 = Ai...Ak of dimension p[i-1]*p[k] 
+<a name="l28"><span class="ln">28   </span></a>     * T2 = Ak+1...Aj of dimension p[k]*p[j] 
+<a name="l29"><span class="ln">29   </span></a>     * so number of multiplications required for T 
+<a name="l30"><span class="ln">30   </span></a>     * M[i][j] = min {M[i][k]+ M[k+1][j] + p[i-1]*p[k]*p[j]} 
+<a name="l31"><span class="ln">31   </span></a>     * We need to calculate M[1][n-1] 
+<a name="l32"><span class="ln">32   </span></a>     * M[i][j] = 0 when i=j as no multiplications are required 
+<a name="l33"><span class="ln">33   </span></a>     * Number of matrix is p.length-1. 
+<a name="l34"><span class="ln">34   </span></a>     */</span><span class="s1"> 
+<a name="l35"><span class="ln">35   </span></a> 
+<a name="l36"><span class="ln">36   </span></a>    </span><span class="s0">void </span><span class="s1">calculateMatMult() { 
+<a name="l37"><span class="ln">37   </span></a>        M = </span><span class="s0">new int</span><span class="s1">[p.length + </span><span class="s3">1</span><span class="s1">][p.length + </span><span class="s3">1</span><span class="s1">]; 
+<a name="l38"><span class="ln">38   </span></a>        sols = </span><span class="s0">new </span><span class="s1">String[p.length + </span><span class="s3">1</span><span class="s1">][p.length + </span><span class="s3">1</span><span class="s1">]; 
+<a name="l39"><span class="ln">39   </span></a>        </span><span class="s0">int </span><span class="s1">n = p.length; 
+<a name="l40"><span class="ln">40   </span></a>        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; n; i++) { 
+<a name="l41"><span class="ln">41   </span></a>            M[i][i] = </span><span class="s3">0</span><span class="s1">; 
+<a name="l42"><span class="ln">42   </span></a>            sols[i][i] = matrix[i - </span><span class="s3">1</span><span class="s1">]; 
+<a name="l43"><span class="ln">43   </span></a>        } 
+<a name="l44"><span class="ln">44   </span></a>        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">len = </span><span class="s3">2</span><span class="s1">; len &lt;= n; len++) { 
+<a name="l45"><span class="ln">45   </span></a>            </span><span class="s2">// len = 2 A1A2 i=1.n-1, j=2 if k=i(A1)(A2) and k&lt;j</span><span class="s1"> 
+<a name="l46"><span class="ln">46   </span></a>            </span><span class="s2">// len = n A1...An, i=1 j=n k&lt;j</span><span class="s1"> 
+<a name="l47"><span class="ln">47   </span></a>            </span><span class="s2">// for any other len i=n-len+1; j= i+len-1 k&lt;j</span><span class="s1"> 
+<a name="l48"><span class="ln">48   </span></a>            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; n - len + </span><span class="s3">1</span><span class="s1">; i++) { 
+<a name="l49"><span class="ln">49   </span></a>                </span><span class="s0">int </span><span class="s1">j = i + len - </span><span class="s3">1</span><span class="s1">; 
+<a name="l50"><span class="ln">50   </span></a>                </span><span class="s0">int </span><span class="s1">min = Integer.MAX_VALUE; 
+<a name="l51"><span class="ln">51   </span></a>                String sol = </span><span class="s4">&quot;&quot;</span><span class="s1">; 
+<a name="l52"><span class="ln">52   </span></a>                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">k = i; k &lt; j; k++) { 
+<a name="l53"><span class="ln">53   </span></a>                    </span><span class="s0">int </span><span class="s1">t = M[i][k] + M[k + </span><span class="s3">1</span><span class="s1">][j] + p[i - </span><span class="s3">1</span><span class="s1">] * p[k] * p[j]; </span><span class="s2">//(Ai...Ak)(Ak+1..Aj)=&gt; p[i-1]*p[k]*p[j-1]</span><span class="s1"> 
+<a name="l54"><span class="ln">54   </span></a>                    </span><span class="s0">if </span><span class="s1">(t &lt; min) { 
+<a name="l55"><span class="ln">55   </span></a>                        min = t; 
+<a name="l56"><span class="ln">56   </span></a>                        </span><span class="s0">int </span><span class="s1">temp = k + </span><span class="s3">1</span><span class="s1">; 
+<a name="l57"><span class="ln">57   </span></a>                        sol = </span><span class="s4">&quot;(&quot; </span><span class="s1">+ sols[i][k] + </span><span class="s4">&quot;)(&quot; </span><span class="s1">+ sols[k + </span><span class="s3">1</span><span class="s1">][j] + </span><span class="s4">&quot;)&quot;</span><span class="s1">; 
+<a name="l58"><span class="ln">58   </span></a>                    } 
+<a name="l59"><span class="ln">59   </span></a>                } 
+<a name="l60"><span class="ln">60   </span></a>                M[i][j] = min; 
+<a name="l61"><span class="ln">61   </span></a>                sols[i][j] = sol; 
+<a name="l62"><span class="ln">62   </span></a>            } 
+<a name="l63"><span class="ln">63   </span></a>        } 
+<a name="l64"><span class="ln">64   </span></a>        System.out.println(M[</span><span class="s3">1</span><span class="s1">][n - </span><span class="s3">1</span><span class="s1">]); 
+<a name="l65"><span class="ln">65   </span></a>        System.out.println(sols[</span><span class="s3">1</span><span class="s1">][n - </span><span class="s3">1</span><span class="s1">]); 
+<a name="l66"><span class="ln">66   </span></a>    } 
+<a name="l67"><span class="ln">67   </span></a> 
+<a name="l68"><span class="ln">68   </span></a>    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+<a name="l69"><span class="ln">69   </span></a>        </span><span class="s0">int </span><span class="s1">p[] = {</span><span class="s3">40</span><span class="s1">, </span><span class="s3">20</span><span class="s1">, </span><span class="s3">30</span><span class="s1">, </span><span class="s3">10</span><span class="s1">, </span><span class="s3">30</span><span class="s1">}; 
+<a name="l70"><span class="ln">70   </span></a>        String[] mat = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s4">&quot;A&quot;</span><span class="s1">, </span><span class="s4">&quot;B&quot;</span><span class="s1">, </span><span class="s4">&quot;C&quot;</span><span class="s1">, </span><span class="s4">&quot;D&quot;</span><span class="s1">}; 
+<a name="l71"><span class="ln">71   </span></a>        MatrixChainMultiplication mcm = </span><span class="s0">new </span><span class="s1">MatrixChainMultiplication(); 
+<a name="l72"><span class="ln">72   </span></a>        mcm.p = p; 
+<a name="l73"><span class="ln">73   </span></a>        mcm.matrix = mat; 
+<a name="l74"><span class="ln">74   </span></a>        mcm.calculateMatMult(); 
+<a name="l75"><span class="ln">75   </span></a> 
+<a name="l76"><span class="ln">76   </span></a>        </span><span class="s0">int </span><span class="s1">p1[] = {</span><span class="s3">10</span><span class="s1">, </span><span class="s3">20</span><span class="s1">, </span><span class="s3">30</span><span class="s1">, </span><span class="s3">40</span><span class="s1">, </span><span class="s3">30</span><span class="s1">}; 
+<a name="l77"><span class="ln">77   </span></a>        String[] mat1 = </span><span class="s0">new </span><span class="s1">String[]{</span><span class="s4">&quot;A&quot;</span><span class="s1">, </span><span class="s4">&quot;B&quot;</span><span class="s1">, </span><span class="s4">&quot;C&quot;</span><span class="s1">, </span><span class="s4">&quot;D&quot;</span><span class="s1">}; 
+<a name="l78"><span class="ln">78   </span></a>        mcm.p = p1; 
+<a name="l79"><span class="ln">79   </span></a>        mcm.matrix = mat1; 
+<a name="l80"><span class="ln">80   </span></a>        mcm.calculateMatMult(); 
+<a name="l81"><span class="ln">81   </span></a> 
+<a name="l82"><span class="ln">82   </span></a>    } 
+<a name="l83"><span class="ln">83   </span></a> 
+<a name="l84"><span class="ln">84   </span></a>} 
+<a name="l85"><span class="ln">85   </span></a></span></pre>
+</body>
+</html>
