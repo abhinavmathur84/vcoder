@@ -19,84 +19,84 @@ MaximumContiguousSubsequenceSum.java</FONT>
 </center></TD></TR></TABLE>
 <pre>
 
-<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.notes.dynamic; 
-<a name="l2"><span class="ln">2    </span></a> 
-<a name="l3"><span class="ln">3    </span></a></span><span class="s0">public class </span><span class="s1">MaximumContiguousSubsequenceSum { 
-<a name="l4"><span class="ln">4    </span></a> 
-<a name="l5"><span class="ln">5    </span></a>    </span><span class="s2">// The input array</span><span class="s1"> 
-<a name="l6"><span class="ln">6    </span></a>    </span><span class="s0">int</span><span class="s1">[] a; 
-<a name="l7"><span class="ln">7    </span></a> 
-<a name="l8"><span class="ln">8    </span></a>    </span><span class="s2">// array which contains the maximum sum till i;</span><span class="s1"> 
-<a name="l9"><span class="ln">9    </span></a>    </span><span class="s2">// maxSum[i] = maximum sum till a[i];</span><span class="s1"> 
-<a name="l10"><span class="ln">10   </span></a>    </span><span class="s0">int</span><span class="s1">[] maxSum; 
-<a name="l11"><span class="ln">11   </span></a> 
-<a name="l12"><span class="ln">12   </span></a>    </span><span class="s2">// array which stores the subsequence which will give the max sum till i;</span><span class="s1"> 
-<a name="l13"><span class="ln">13   </span></a>    </span><span class="s2">// sols[i] = subsequence which will give maximum sum till a[i]</span><span class="s1"> 
-<a name="l14"><span class="ln">14   </span></a>    String[] sols; 
-<a name="l15"><span class="ln">15   </span></a> 
-<a name="l16"><span class="ln">16   </span></a>    </span><span class="s2">//Approach</span><span class="s1"> 
-<a name="l17"><span class="ln">17   </span></a> 
-<a name="l18"><span class="ln">18   </span></a>    </span><span class="s2">/** 
-<a name="l19"><span class="ln">19   </span></a>     * initialize the max  to maxSum[0]; 
-<a name="l20"><span class="ln">20   </span></a>     * Solve for i-1 and now 
-<a name="l21"><span class="ln">21   </span></a>     * if maxSum[i-1] &gt; 0 then maxSum[i] = max {maxSum[i-1]+a[i],a[i]} and update the sols accordingly 
-<a name="l22"><span class="ln">22   </span></a>     * else maxSum[i] = a[i] and sols[i] = a[i] only. start a new window at a[i] 
-<a name="l23"><span class="ln">23   </span></a>     * keep updating the max and solution accordingly 
-<a name="l24"><span class="ln">24   </span></a>     */</span><span class="s1"> 
-<a name="l25"><span class="ln">25   </span></a> 
-<a name="l26"><span class="ln">26   </span></a>    </span><span class="s0">void </span><span class="s1">calculate() { 
-<a name="l27"><span class="ln">27   </span></a>        maxSum = </span><span class="s0">new int</span><span class="s1">[a.length]; 
-<a name="l28"><span class="ln">28   </span></a>        sols = </span><span class="s0">new </span><span class="s1">String[a.length]; 
-<a name="l29"><span class="ln">29   </span></a> 
-<a name="l30"><span class="ln">30   </span></a>        </span><span class="s2">// initialize the maxSum with just 1 element array as that element itself;</span><span class="s1"> 
-<a name="l31"><span class="ln">31   </span></a>        maxSum[</span><span class="s3">0</span><span class="s1">] = a[</span><span class="s3">0</span><span class="s1">]; 
-<a name="l32"><span class="ln">32   </span></a> 
-<a name="l33"><span class="ln">33   </span></a>        </span><span class="s2">// initialize the solution(subsequence) with just 1 element array as that element itself.s</span><span class="s1"> 
-<a name="l34"><span class="ln">34   </span></a>        sols[</span><span class="s3">0</span><span class="s1">] = a[</span><span class="s3">0</span><span class="s1">] + </span><span class="s4">&quot;&quot;</span><span class="s1">; 
-<a name="l35"><span class="ln">35   </span></a> 
-<a name="l36"><span class="ln">36   </span></a>        </span><span class="s0">int </span><span class="s1">max = maxSum[</span><span class="s3">0</span><span class="s1">]; 
-<a name="l37"><span class="ln">37   </span></a>        String sol = sols[</span><span class="s3">0</span><span class="s1">]; 
-<a name="l38"><span class="ln">38   </span></a>        </span><span class="s2">// loop to build the subsequence bottom up starting from second element of array and ending at last.</span><span class="s1"> 
-<a name="l39"><span class="ln">39   </span></a>        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; a.length; i++) { 
-<a name="l40"><span class="ln">40   </span></a>            </span><span class="s0">if</span><span class="s1">(maxSum[i-</span><span class="s3">1</span><span class="s1">] &gt; </span><span class="s3">0</span><span class="s1">) { 
-<a name="l41"><span class="ln">41   </span></a>                </span><span class="s0">int </span><span class="s1">temp = maxSum[i-</span><span class="s3">1</span><span class="s1">]+a[i]; 
-<a name="l42"><span class="ln">42   </span></a>                </span><span class="s0">if</span><span class="s1">(temp &gt; a[i]) { 
-<a name="l43"><span class="ln">43   </span></a>                    maxSum[i] = temp; </span><span class="s2">// update the maxSum</span><span class="s1"> 
-<a name="l44"><span class="ln">44   </span></a>                    sols[i] = sols[i-</span><span class="s3">1</span><span class="s1">]+</span><span class="s4">&quot;,&quot;</span><span class="s1">+a[i]; </span><span class="s2">// update the sols to include a[i]</span><span class="s1"> 
-<a name="l45"><span class="ln">45   </span></a>                } </span><span class="s0">else </span><span class="s1">{ 
-<a name="l46"><span class="ln">46   </span></a>                    maxSum[i] = a[i]; </span><span class="s2">//update the maxSum to a[i]</span><span class="s1"> 
-<a name="l47"><span class="ln">47   </span></a>                    sols[i] = a[i]+</span><span class="s4">&quot;&quot;</span><span class="s1">; </span><span class="s2">// start a new subsequence starting from a[i]</span><span class="s1"> 
-<a name="l48"><span class="ln">48   </span></a>                } 
-<a name="l49"><span class="ln">49   </span></a>            } </span><span class="s0">else </span><span class="s1">{ 
-<a name="l50"><span class="ln">50   </span></a>                maxSum[i] = a[i]; </span><span class="s2">//update the maxSum to a[i]</span><span class="s1"> 
-<a name="l51"><span class="ln">51   </span></a>                sols[i] = a[i]+</span><span class="s4">&quot;&quot;</span><span class="s1">; </span><span class="s2">// start a new subsequence starting from a[i]</span><span class="s1"> 
-<a name="l52"><span class="ln">52   </span></a>            } 
-<a name="l53"><span class="ln">53   </span></a>            </span><span class="s0">if</span><span class="s1">(max &lt; maxSum[i]) { 
-<a name="l54"><span class="ln">54   </span></a>                max = maxSum[i]; 
-<a name="l55"><span class="ln">55   </span></a>                sol = sols[i]; 
-<a name="l56"><span class="ln">56   </span></a>            } 
-<a name="l57"><span class="ln">57   </span></a>        } 
-<a name="l58"><span class="ln">58   </span></a>        System.out.println(</span><span class="s4">&quot;MaximumContiguousSubsequenceSum is &quot;</span><span class="s1">+max); 
-<a name="l59"><span class="ln">59   </span></a>        System.out.println(</span><span class="s4">&quot;Relevant Subsequence is &quot; </span><span class="s1">+ sol); 
-<a name="l60"><span class="ln">60   </span></a>    } 
-<a name="l61"><span class="ln">61   </span></a> 
-<a name="l62"><span class="ln">62   </span></a>    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
-<a name="l63"><span class="ln">63   </span></a> 
-<a name="l64"><span class="ln">64   </span></a>        MaximumContiguousSubsequenceSum mcss = </span><span class="s0">new </span><span class="s1">MaximumContiguousSubsequenceSum(); 
-<a name="l65"><span class="ln">65   </span></a>        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,</span><span class="s3">6</span><span class="s1">}; 
-<a name="l66"><span class="ln">66   </span></a>        mcss.calculate(); 
-<a name="l67"><span class="ln">67   </span></a> 
-<a name="l68"><span class="ln">68   </span></a>        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{-</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">}; 
-<a name="l69"><span class="ln">69   </span></a>        mcss.calculate(); 
-<a name="l70"><span class="ln">70   </span></a> 
-<a name="l71"><span class="ln">71   </span></a> 
-<a name="l72"><span class="ln">72   </span></a>        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{-</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">}; 
-<a name="l73"><span class="ln">73   </span></a>        mcss.calculate(); 
-<a name="l74"><span class="ln">74   </span></a> 
-<a name="l75"><span class="ln">75   </span></a> 
-<a name="l76"><span class="ln">76   </span></a>    } 
-<a name="l77"><span class="ln">77   </span></a> 
-<a name="l78"><span class="ln">78   </span></a>} 
-<a name="l79"><span class="ln">79   </span></a></span></pre>
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+</span><span class="s0">public class </span><span class="s1">MaximumContiguousSubsequenceSum { 
+ 
+    </span><span class="s2">// The input array</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[] a; 
+ 
+    </span><span class="s2">// array which contains the maximum sum till i;</span><span class="s1"> 
+    </span><span class="s2">// maxSum[i] = maximum sum till a[i];</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[] maxSum; 
+ 
+    </span><span class="s2">// array which stores the subsequence which will give the max sum till i;</span><span class="s1"> 
+    </span><span class="s2">// sols[i] = subsequence which will give maximum sum till a[i]</span><span class="s1"> 
+    String[] sols; 
+ 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * initialize the max  to maxSum[0]; 
+     * Solve for i-1 and now 
+     * if maxSum[i-1] &gt; 0 then maxSum[i] = max {maxSum[i-1]+a[i],a[i]} and update the sols accordingly 
+     * else maxSum[i] = a[i] and sols[i] = a[i] only. start a new window at a[i] 
+     * keep updating the max and solution accordingly 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">void </span><span class="s1">calculate() { 
+        maxSum = </span><span class="s0">new int</span><span class="s1">[a.length]; 
+        sols = </span><span class="s0">new </span><span class="s1">String[a.length]; 
+ 
+        </span><span class="s2">// initialize the maxSum with just 1 element array as that element itself;</span><span class="s1"> 
+        maxSum[</span><span class="s3">0</span><span class="s1">] = a[</span><span class="s3">0</span><span class="s1">]; 
+ 
+        </span><span class="s2">// initialize the solution(subsequence) with just 1 element array as that element itself.s</span><span class="s1"> 
+        sols[</span><span class="s3">0</span><span class="s1">] = a[</span><span class="s3">0</span><span class="s1">] + </span><span class="s4">&quot;&quot;</span><span class="s1">; 
+ 
+        </span><span class="s0">int </span><span class="s1">max = maxSum[</span><span class="s3">0</span><span class="s1">]; 
+        String sol = sols[</span><span class="s3">0</span><span class="s1">]; 
+        </span><span class="s2">// loop to build the subsequence bottom up starting from second element of array and ending at last.</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; a.length; i++) { 
+            </span><span class="s0">if</span><span class="s1">(maxSum[i-</span><span class="s3">1</span><span class="s1">] &gt; </span><span class="s3">0</span><span class="s1">) { 
+                </span><span class="s0">int </span><span class="s1">temp = maxSum[i-</span><span class="s3">1</span><span class="s1">]+a[i]; 
+                </span><span class="s0">if</span><span class="s1">(temp &gt; a[i]) { 
+                    maxSum[i] = temp; </span><span class="s2">// update the maxSum</span><span class="s1"> 
+                    sols[i] = sols[i-</span><span class="s3">1</span><span class="s1">]+</span><span class="s4">&quot;,&quot;</span><span class="s1">+a[i]; </span><span class="s2">// update the sols to include a[i]</span><span class="s1"> 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    maxSum[i] = a[i]; </span><span class="s2">//update the maxSum to a[i]</span><span class="s1"> 
+                    sols[i] = a[i]+</span><span class="s4">&quot;&quot;</span><span class="s1">; </span><span class="s2">// start a new subsequence starting from a[i]</span><span class="s1"> 
+                } 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                maxSum[i] = a[i]; </span><span class="s2">//update the maxSum to a[i]</span><span class="s1"> 
+                sols[i] = a[i]+</span><span class="s4">&quot;&quot;</span><span class="s1">; </span><span class="s2">// start a new subsequence starting from a[i]</span><span class="s1"> 
+            } 
+            </span><span class="s0">if</span><span class="s1">(max &lt; maxSum[i]) { 
+                max = maxSum[i]; 
+                sol = sols[i]; 
+            } 
+        } 
+        System.out.println(</span><span class="s4">&quot;MaximumContiguousSubsequenceSum is &quot;</span><span class="s1">+max); 
+        System.out.println(</span><span class="s4">&quot;Relevant Subsequence is &quot; </span><span class="s1">+ sol); 
+    } 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+ 
+        MaximumContiguousSubsequenceSum mcss = </span><span class="s0">new </span><span class="s1">MaximumContiguousSubsequenceSum(); 
+        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,</span><span class="s3">6</span><span class="s1">}; 
+        mcss.calculate(); 
+ 
+        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{-</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">,-</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">}; 
+        mcss.calculate(); 
+ 
+ 
+        mcss.a = </span><span class="s0">new int</span><span class="s1">[]{-</span><span class="s3">2</span><span class="s1">,-</span><span class="s3">3</span><span class="s1">,-</span><span class="s3">1</span><span class="s1">}; 
+        mcss.calculate(); 
+ 
+ 
+    } 
+ 
+} 
+</span></pre>
 </body>
 </html>

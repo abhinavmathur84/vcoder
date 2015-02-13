@@ -19,74 +19,74 @@ KnapSack01.java</FONT>
 </center></TD></TR></TABLE>
 <pre>
 
-<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.notes.dynamic; 
-<a name="l2"><span class="ln">2    </span></a> 
-<a name="l3"><span class="ln">3    </span></a> 
-<a name="l4"><span class="ln">4    </span></a></span><span class="s0">public class </span><span class="s1">KnapSack01 { 
-<a name="l5"><span class="ln">5    </span></a> 
-<a name="l6"><span class="ln">6    </span></a>    </span><span class="s0">int</span><span class="s1">[] weight; 
-<a name="l7"><span class="ln">7    </span></a> 
-<a name="l8"><span class="ln">8    </span></a>    </span><span class="s2">// benefit[i] corresponding to weight[i]</span><span class="s1"> 
-<a name="l9"><span class="ln">9    </span></a>    </span><span class="s0">int</span><span class="s1">[] benefit; 
-<a name="l10"><span class="ln">10   </span></a> 
-<a name="l11"><span class="ln">11   </span></a>    </span><span class="s2">// size of knapsack</span><span class="s1"> 
-<a name="l12"><span class="ln">12   </span></a>    </span><span class="s0">int </span><span class="s1">size; 
-<a name="l13"><span class="ln">13   </span></a> 
-<a name="l14"><span class="ln">14   </span></a>    </span><span class="s0">int</span><span class="s1">[] B; 
-<a name="l15"><span class="ln">15   </span></a>    String[] sols; 
-<a name="l16"><span class="ln">16   </span></a>    </span><span class="s2">//Approach</span><span class="s1"> 
-<a name="l17"><span class="ln">17   </span></a> 
-<a name="l18"><span class="ln">18   </span></a>    </span><span class="s2">/** 
-<a name="l19"><span class="ln">19   </span></a>     * B[w] = max benefit which can be obtained from knapsack of size w 
-<a name="l20"><span class="ln">20   </span></a>     * B[w] = max{B[w-weight[i]]+benefit[i]} for all i possible in weights 
-<a name="l21"><span class="ln">21   </span></a>     */</span><span class="s1"> 
-<a name="l22"><span class="ln">22   </span></a>    </span><span class="s0">void </span><span class="s1">calcuate() { 
-<a name="l23"><span class="ln">23   </span></a>        B = </span><span class="s0">new int</span><span class="s1">[size + </span><span class="s3">1</span><span class="s1">]; 
-<a name="l24"><span class="ln">24   </span></a>        sols = </span><span class="s0">new </span><span class="s1">String[size + </span><span class="s3">1</span><span class="s1">]; 
-<a name="l25"><span class="ln">25   </span></a> 
-<a name="l26"><span class="ln">26   </span></a>        B[</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">0</span><span class="s1">; </span><span class="s2">// benefit for knapsack of size 0 is 0;</span><span class="s1"> 
-<a name="l27"><span class="ln">27   </span></a>        sols[</span><span class="s3">0</span><span class="s1">] = </span><span class="s4">&quot;&quot;</span><span class="s1">; 
-<a name="l28"><span class="ln">28   </span></a> 
-<a name="l29"><span class="ln">29   </span></a>        </span><span class="s0">int </span><span class="s1">len = benefit.length; 
-<a name="l30"><span class="ln">30   </span></a> 
-<a name="l31"><span class="ln">31   </span></a>        </span><span class="s2">// build the solution bottom up</span><span class="s1"> 
-<a name="l32"><span class="ln">32   </span></a>        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">w = </span><span class="s3">0</span><span class="s1">; w &lt;= size; w++) { 
-<a name="l33"><span class="ln">33   </span></a>            </span><span class="s0">int </span><span class="s1">max = Integer.MIN_VALUE; 
-<a name="l34"><span class="ln">34   </span></a>            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; len; i++) { 
-<a name="l35"><span class="ln">35   </span></a>                </span><span class="s0">if </span><span class="s1">(w &gt;= weight[i]) { 
-<a name="l36"><span class="ln">36   </span></a>                    </span><span class="s0">int </span><span class="s1">t = B[w - weight[i]] + benefit[i]; 
-<a name="l37"><span class="ln">37   </span></a>                    </span><span class="s0">if </span><span class="s1">(t &gt; max) { 
-<a name="l38"><span class="ln">38   </span></a>                        max = t; 
-<a name="l39"><span class="ln">39   </span></a>                        B[w] = t; 
-<a name="l40"><span class="ln">40   </span></a>                        sols[w] = sols[w - weight[i]] + </span><span class="s4">&quot;,&quot; </span><span class="s1">+ weight[i]; 
-<a name="l41"><span class="ln">41   </span></a>                    } 
-<a name="l42"><span class="ln">42   </span></a>                } 
-<a name="l43"><span class="ln">43   </span></a>            } 
-<a name="l44"><span class="ln">44   </span></a>        } 
-<a name="l45"><span class="ln">45   </span></a>        System.out.println(</span><span class="s4">&quot;Optimal Weight is &quot; </span><span class="s1">+ B[size]); 
-<a name="l46"><span class="ln">46   </span></a>        System.out.println(</span><span class="s4">&quot;Solution is &quot; </span><span class="s1">+ sols[size]); 
-<a name="l47"><span class="ln">47   </span></a>    } 
-<a name="l48"><span class="ln">48   </span></a> 
-<a name="l49"><span class="ln">49   </span></a>    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
-<a name="l50"><span class="ln">50   </span></a>        </span><span class="s0">int</span><span class="s1">[] w = {</span><span class="s3">2</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">5</span><span class="s1">}; 
-<a name="l51"><span class="ln">51   </span></a>        </span><span class="s0">int</span><span class="s1">[] b = {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">5</span><span class="s1">, </span><span class="s3">6</span><span class="s1">}; 
-<a name="l52"><span class="ln">52   </span></a> 
-<a name="l53"><span class="ln">53   </span></a>        KnapSack01 ks = </span><span class="s0">new </span><span class="s1">KnapSack01(); 
-<a name="l54"><span class="ln">54   </span></a>        ks.benefit = b; 
-<a name="l55"><span class="ln">55   </span></a>        ks.weight = w; 
-<a name="l56"><span class="ln">56   </span></a>        ks.size = </span><span class="s3">5</span><span class="s1">; 
-<a name="l57"><span class="ln">57   </span></a>        ks.calcuate(); 
-<a name="l58"><span class="ln">58   </span></a> 
-<a name="l59"><span class="ln">59   </span></a>        </span><span class="s0">int </span><span class="s1">val[] = {</span><span class="s3">60</span><span class="s1">, </span><span class="s3">100</span><span class="s1">, </span><span class="s3">120</span><span class="s1">}; 
-<a name="l60"><span class="ln">60   </span></a>        </span><span class="s0">int </span><span class="s1">wt[] = {</span><span class="s3">10</span><span class="s1">, </span><span class="s3">20</span><span class="s1">, </span><span class="s3">30</span><span class="s1">}; 
-<a name="l61"><span class="ln">61   </span></a>        </span><span class="s0">int  </span><span class="s1">W = </span><span class="s3">50</span><span class="s1">; 
-<a name="l62"><span class="ln">62   </span></a>        ks.benefit = val; 
-<a name="l63"><span class="ln">63   </span></a>        ks.weight = wt; 
-<a name="l64"><span class="ln">64   </span></a>        ks.size = W; 
-<a name="l65"><span class="ln">65   </span></a>        ks.calcuate(); 
-<a name="l66"><span class="ln">66   </span></a>    } 
-<a name="l67"><span class="ln">67   </span></a> 
-<a name="l68"><span class="ln">68   </span></a>} 
-<a name="l69"><span class="ln">69   </span></a></span></pre>
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">KnapSack01 { 
+ 
+    </span><span class="s0">int</span><span class="s1">[] weight; 
+ 
+    </span><span class="s2">// benefit[i] corresponding to weight[i]</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[] benefit; 
+ 
+    </span><span class="s2">// size of knapsack</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">size; 
+ 
+    </span><span class="s0">int</span><span class="s1">[] B; 
+    String[] sols; 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * B[w] = max benefit which can be obtained from knapsack of size w 
+     * B[w] = max{B[w-weight[i]]+benefit[i]} for all i possible in weights 
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">calcuate() { 
+        B = </span><span class="s0">new int</span><span class="s1">[size + </span><span class="s3">1</span><span class="s1">]; 
+        sols = </span><span class="s0">new </span><span class="s1">String[size + </span><span class="s3">1</span><span class="s1">]; 
+ 
+        B[</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">0</span><span class="s1">; </span><span class="s2">// benefit for knapsack of size 0 is 0;</span><span class="s1"> 
+        sols[</span><span class="s3">0</span><span class="s1">] = </span><span class="s4">&quot;&quot;</span><span class="s1">; 
+ 
+        </span><span class="s0">int </span><span class="s1">len = benefit.length; 
+ 
+        </span><span class="s2">// build the solution bottom up</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">w = </span><span class="s3">0</span><span class="s1">; w &lt;= size; w++) { 
+            </span><span class="s0">int </span><span class="s1">max = Integer.MIN_VALUE; 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; len; i++) { 
+                </span><span class="s0">if </span><span class="s1">(w &gt;= weight[i]) { 
+                    </span><span class="s0">int </span><span class="s1">t = B[w - weight[i]] + benefit[i]; 
+                    </span><span class="s0">if </span><span class="s1">(t &gt; max) { 
+                        max = t; 
+                        B[w] = t; 
+                        sols[w] = sols[w - weight[i]] + </span><span class="s4">&quot;,&quot; </span><span class="s1">+ weight[i]; 
+                    } 
+                } 
+            } 
+        } 
+        System.out.println(</span><span class="s4">&quot;Optimal Weight is &quot; </span><span class="s1">+ B[size]); 
+        System.out.println(</span><span class="s4">&quot;Solution is &quot; </span><span class="s1">+ sols[size]); 
+    } 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        </span><span class="s0">int</span><span class="s1">[] w = {</span><span class="s3">2</span><span class="s1">, </span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">5</span><span class="s1">}; 
+        </span><span class="s0">int</span><span class="s1">[] b = {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">5</span><span class="s1">, </span><span class="s3">6</span><span class="s1">}; 
+ 
+        KnapSack01 ks = </span><span class="s0">new </span><span class="s1">KnapSack01(); 
+        ks.benefit = b; 
+        ks.weight = w; 
+        ks.size = </span><span class="s3">5</span><span class="s1">; 
+        ks.calcuate(); 
+ 
+        </span><span class="s0">int </span><span class="s1">val[] = {</span><span class="s3">60</span><span class="s1">, </span><span class="s3">100</span><span class="s1">, </span><span class="s3">120</span><span class="s1">}; 
+        </span><span class="s0">int </span><span class="s1">wt[] = {</span><span class="s3">10</span><span class="s1">, </span><span class="s3">20</span><span class="s1">, </span><span class="s3">30</span><span class="s1">}; 
+        </span><span class="s0">int  </span><span class="s1">W = </span><span class="s3">50</span><span class="s1">; 
+        ks.benefit = val; 
+        ks.weight = wt; 
+        ks.size = W; 
+        ks.calcuate(); 
+    } 
+ 
+} 
+</span></pre>
 </body>
 </html>

@@ -20,89 +20,89 @@ LongestPalindromicSubsequence.java</FONT>
 </center></TD></TR></TABLE>
 <pre>
 
-<a name="l1"><span class="ln">1    </span></a><span class="s0">package </span><span class="s1">com.notes.dynamic; 
-<a name="l2"><span class="ln">2    </span></a> 
-<a name="l3"><span class="ln">3    </span></a></span><span class="s2">/** 
-<a name="l4"><span class="ln">4    </span></a> * TODO: Read O(n) algo too 
-<a name="l5"><span class="ln">5    </span></a> */</span><span class="s1"> 
-<a name="l6"><span class="ln">6    </span></a></span><span class="s0">public class </span><span class="s1">LongestPalindromicSubsequence { 
-<a name="l7"><span class="ln">7    </span></a> 
-<a name="l8"><span class="ln">8    </span></a>    </span><span class="s2">// input array</span><span class="s1"> 
-<a name="l9"><span class="ln">9    </span></a>    String[] a; 
-<a name="l10"><span class="ln">10   </span></a> 
-<a name="l11"><span class="ln">11   </span></a>    </span><span class="s0">int</span><span class="s1">[][] lp; 
-<a name="l12"><span class="ln">12   </span></a> 
-<a name="l13"><span class="ln">13   </span></a>    String[][] sols; 
-<a name="l14"><span class="ln">14   </span></a>    </span><span class="s2">//Approach</span><span class="s1"> 
-<a name="l15"><span class="ln">15   </span></a> 
-<a name="l16"><span class="ln">16   </span></a>    </span><span class="s2">/** 
-<a name="l17"><span class="ln">17   </span></a>     * lp(i,j) = length of longest palindromic subsequence between a[i] and a[j] 
-<a name="l18"><span class="ln">18   </span></a>     * sols(i,j) = longest palindromic subsequence between a[i] and a[j] 
-<a name="l19"><span class="ln">19   </span></a>     * lp(i,j)  = 1 if i=j 
-<a name="l20"><span class="ln">20   </span></a>     *          = 1 if (j=i+1 and a[i] != a[j]) 
-<a name="l21"><span class="ln">21   </span></a>     *          = 2 if (j=i+1 and a[i] = a[j]) 
-<a name="l22"><span class="ln">22   </span></a>     *          = lp(i+1,j-1) +2 if a(i) = a(j) 
-<a name="l23"><span class="ln">23   </span></a>     *          = max {lp(i+1,j),lp(i,j-1)} 
-<a name="l24"><span class="ln">24   </span></a>     * </span><span class="s3">&lt;p/&gt;</span><span class="s2"> 
-<a name="l25"><span class="ln">25   </span></a>     * We need to calculate lp(0,a.length-1) 
-<a name="l26"><span class="ln">26   </span></a>     */</span><span class="s1"> 
-<a name="l27"><span class="ln">27   </span></a>    </span><span class="s0">void </span><span class="s1">calculateLPS() { 
-<a name="l28"><span class="ln">28   </span></a>        lp = </span><span class="s0">new int</span><span class="s1">[a.length][a.length]; 
-<a name="l29"><span class="ln">29   </span></a>        sols = </span><span class="s0">new </span><span class="s1">String[a.length][a.length]; 
-<a name="l30"><span class="ln">30   </span></a> 
-<a name="l31"><span class="ln">31   </span></a>        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; a.length; i++) { </span><span class="s2">// solution for substring of length 1</span><span class="s1"> 
-<a name="l32"><span class="ln">32   </span></a>            lp[i][i] = </span><span class="s4">1</span><span class="s1">; 
-<a name="l33"><span class="ln">33   </span></a>            sols[i][i] = a[i]; 
-<a name="l34"><span class="ln">34   </span></a>        } 
-<a name="l35"><span class="ln">35   </span></a>        </span><span class="s2">// build the table for all substring length &gt;=2 till a.length</span><span class="s1"> 
-<a name="l36"><span class="ln">36   </span></a>        </span><span class="s0">int </span><span class="s1">subStrLen = </span><span class="s4">2</span><span class="s1">; 
-<a name="l37"><span class="ln">37   </span></a>        </span><span class="s0">for </span><span class="s1">(subStrLen = </span><span class="s4">2</span><span class="s1">; subStrLen &lt;= a.length; subStrLen++) { 
-<a name="l38"><span class="ln">38   </span></a>            </span><span class="s2">// when substring length is subStrLen, i can take value from 0 to a.length-subStrLen+1</span><span class="s1"> 
-<a name="l39"><span class="ln">39   </span></a>            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; a.length - subStrLen + </span><span class="s4">1</span><span class="s1">; i++) { 
-<a name="l40"><span class="ln">40   </span></a>                </span><span class="s2">// corresponding j will be from i+subStrLen -1</span><span class="s1"> 
-<a name="l41"><span class="ln">41   </span></a>                </span><span class="s0">int </span><span class="s1">j = i + subStrLen - </span><span class="s4">1</span><span class="s1">; 
-<a name="l42"><span class="ln">42   </span></a>                </span><span class="s0">if </span><span class="s1">(a[i].equals(a[j]) &amp;&amp; subStrLen == </span><span class="s4">2</span><span class="s1">) { </span><span class="s2">// if substring of length 2 and both characters are same</span><span class="s1"> 
-<a name="l43"><span class="ln">43   </span></a>                    lp[i][j] = </span><span class="s4">2</span><span class="s1">; </span><span class="s2">// palindrome length will be 2</span><span class="s1"> 
-<a name="l44"><span class="ln">44   </span></a>                    sols[i][j] = a[i] + a[j]; </span><span class="s2">// palindrome will be the substring itself</span><span class="s1"> 
-<a name="l45"><span class="ln">45   </span></a>                } </span><span class="s0">else if </span><span class="s1">(a[i].equals(a[j])) { </span><span class="s2">// if both characters are same</span><span class="s1"> 
-<a name="l46"><span class="ln">46   </span></a>                    lp[i][j] = lp[i + </span><span class="s4">1</span><span class="s1">][j - </span><span class="s4">1</span><span class="s1">] + </span><span class="s4">2</span><span class="s1">; </span><span class="s2">// palindrome length is sub problem + start and end character</span><span class="s1"> 
-<a name="l47"><span class="ln">47   </span></a>                    sols[i][j] = a[i] + sols[i + </span><span class="s4">1</span><span class="s1">][j - </span><span class="s4">1</span><span class="s1">] + a[j]; 
-<a name="l48"><span class="ln">48   </span></a>                } </span><span class="s0">else </span><span class="s1">{ 
-<a name="l49"><span class="ln">49   </span></a>                    </span><span class="s0">int </span><span class="s1">t1 = lp[i][j - </span><span class="s4">1</span><span class="s1">]; </span><span class="s2">// else solve these 2 sub problems</span><span class="s1"> 
-<a name="l50"><span class="ln">50   </span></a>                    </span><span class="s0">int </span><span class="s1">t2 = lp[i + </span><span class="s4">1</span><span class="s1">][j]; 
-<a name="l51"><span class="ln">51   </span></a>                    </span><span class="s0">if </span><span class="s1">(t1 &gt; t2) { </span><span class="s2">// pick the larger one</span><span class="s1"> 
-<a name="l52"><span class="ln">52   </span></a>                        lp[i][j] = t1; 
-<a name="l53"><span class="ln">53   </span></a>                        sols[i][j] = sols[i][j - </span><span class="s4">1</span><span class="s1">]; 
-<a name="l54"><span class="ln">54   </span></a>                    } </span><span class="s0">else </span><span class="s1">{ 
-<a name="l55"><span class="ln">55   </span></a>                        lp[i][j] = t2; 
-<a name="l56"><span class="ln">56   </span></a>                        sols[i][j] = sols[i + </span><span class="s4">1</span><span class="s1">][j]; 
-<a name="l57"><span class="ln">57   </span></a>                    } 
-<a name="l58"><span class="ln">58   </span></a>                } 
-<a name="l59"><span class="ln">59   </span></a>            } 
-<a name="l60"><span class="ln">60   </span></a>        } 
-<a name="l61"><span class="ln">61   </span></a>        System.out.println(</span><span class="s5">&quot;Length of longest palindromic subsequence &quot; </span><span class="s1">+ lp[</span><span class="s4">0</span><span class="s1">][a.length - </span><span class="s4">1</span><span class="s1">]); 
-<a name="l62"><span class="ln">62   </span></a>        System.out.println(</span><span class="s5">&quot;Longest palindromic subsequence is &quot; </span><span class="s1">+ sols[</span><span class="s4">0</span><span class="s1">][a.length - </span><span class="s4">1</span><span class="s1">]); 
-<a name="l63"><span class="ln">63   </span></a>    } 
-<a name="l64"><span class="ln">64   </span></a> 
-<a name="l65"><span class="ln">65   </span></a> 
-<a name="l66"><span class="ln">66   </span></a>    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
-<a name="l67"><span class="ln">67   </span></a>        LongestPalindromicSubsequence lps = </span><span class="s0">new </span><span class="s1">LongestPalindromicSubsequence(); 
-<a name="l68"><span class="ln">68   </span></a> 
-<a name="l69"><span class="ln">69   </span></a>        lps.a = </span><span class="s5">&quot;A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
-<a name="l70"><span class="ln">70   </span></a>        lps.calculateLPS(); 
-<a name="l71"><span class="ln">71   </span></a> 
-<a name="l72"><span class="ln">72   </span></a>        lps.a = </span><span class="s5">&quot;A A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
-<a name="l73"><span class="ln">73   </span></a>        lps.calculateLPS(); 
-<a name="l74"><span class="ln">74   </span></a> 
-<a name="l75"><span class="ln">75   </span></a>        lps.a = </span><span class="s5">&quot;A B&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
-<a name="l76"><span class="ln">76   </span></a>        lps.calculateLPS(); 
-<a name="l77"><span class="ln">77   </span></a>        lps.a = </span><span class="s5">&quot;A B A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
-<a name="l78"><span class="ln">78   </span></a>        lps.calculateLPS(); 
-<a name="l79"><span class="ln">79   </span></a> 
-<a name="l80"><span class="ln">80   </span></a>        lps.a = </span><span class="s5">&quot;X A Y B Z B A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
-<a name="l81"><span class="ln">81   </span></a>        lps.calculateLPS(); 
-<a name="l82"><span class="ln">82   </span></a>    } 
-<a name="l83"><span class="ln">83   </span></a>} 
-<a name="l84"><span class="ln">84   </span></a></span></pre>
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+</span><span class="s2">/** 
+ * TODO: Read O(n) algo too 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">LongestPalindromicSubsequence { 
+ 
+    </span><span class="s2">// input array</span><span class="s1"> 
+    String[] a; 
+ 
+    </span><span class="s0">int</span><span class="s1">[][] lp; 
+ 
+    String[][] sols; 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+ 
+    </span><span class="s2">/** 
+     * lp(i,j) = length of longest palindromic subsequence between a[i] and a[j] 
+     * sols(i,j) = longest palindromic subsequence between a[i] and a[j] 
+     * lp(i,j)  = 1 if i=j 
+     *          = 1 if (j=i+1 and a[i] != a[j]) 
+     *          = 2 if (j=i+1 and a[i] = a[j]) 
+     *          = lp(i+1,j-1) +2 if a(i) = a(j) 
+     *          = max {lp(i+1,j),lp(i,j-1)} 
+     * </span><span class="s3">&lt;p/&gt;</span><span class="s2"> 
+     * We need to calculate lp(0,a.length-1) 
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">calculateLPS() { 
+        lp = </span><span class="s0">new int</span><span class="s1">[a.length][a.length]; 
+        sols = </span><span class="s0">new </span><span class="s1">String[a.length][a.length]; 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; a.length; i++) { </span><span class="s2">// solution for substring of length 1</span><span class="s1"> 
+            lp[i][i] = </span><span class="s4">1</span><span class="s1">; 
+            sols[i][i] = a[i]; 
+        } 
+        </span><span class="s2">// build the table for all substring length &gt;=2 till a.length</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">subStrLen = </span><span class="s4">2</span><span class="s1">; 
+        </span><span class="s0">for </span><span class="s1">(subStrLen = </span><span class="s4">2</span><span class="s1">; subStrLen &lt;= a.length; subStrLen++) { 
+            </span><span class="s2">// when substring length is subStrLen, i can take value from 0 to a.length-subStrLen+1</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; a.length - subStrLen + </span><span class="s4">1</span><span class="s1">; i++) { 
+                </span><span class="s2">// corresponding j will be from i+subStrLen -1</span><span class="s1"> 
+                </span><span class="s0">int </span><span class="s1">j = i + subStrLen - </span><span class="s4">1</span><span class="s1">; 
+                </span><span class="s0">if </span><span class="s1">(a[i].equals(a[j]) &amp;&amp; subStrLen == </span><span class="s4">2</span><span class="s1">) { </span><span class="s2">// if substring of length 2 and both characters are same</span><span class="s1"> 
+                    lp[i][j] = </span><span class="s4">2</span><span class="s1">; </span><span class="s2">// palindrome length will be 2</span><span class="s1"> 
+                    sols[i][j] = a[i] + a[j]; </span><span class="s2">// palindrome will be the substring itself</span><span class="s1"> 
+                } </span><span class="s0">else if </span><span class="s1">(a[i].equals(a[j])) { </span><span class="s2">// if both characters are same</span><span class="s1"> 
+                    lp[i][j] = lp[i + </span><span class="s4">1</span><span class="s1">][j - </span><span class="s4">1</span><span class="s1">] + </span><span class="s4">2</span><span class="s1">; </span><span class="s2">// palindrome length is sub problem + start and end character</span><span class="s1"> 
+                    sols[i][j] = a[i] + sols[i + </span><span class="s4">1</span><span class="s1">][j - </span><span class="s4">1</span><span class="s1">] + a[j]; 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">int </span><span class="s1">t1 = lp[i][j - </span><span class="s4">1</span><span class="s1">]; </span><span class="s2">// else solve these 2 sub problems</span><span class="s1"> 
+                    </span><span class="s0">int </span><span class="s1">t2 = lp[i + </span><span class="s4">1</span><span class="s1">][j]; 
+                    </span><span class="s0">if </span><span class="s1">(t1 &gt; t2) { </span><span class="s2">// pick the larger one</span><span class="s1"> 
+                        lp[i][j] = t1; 
+                        sols[i][j] = sols[i][j - </span><span class="s4">1</span><span class="s1">]; 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        lp[i][j] = t2; 
+                        sols[i][j] = sols[i + </span><span class="s4">1</span><span class="s1">][j]; 
+                    } 
+                } 
+            } 
+        } 
+        System.out.println(</span><span class="s5">&quot;Length of longest palindromic subsequence &quot; </span><span class="s1">+ lp[</span><span class="s4">0</span><span class="s1">][a.length - </span><span class="s4">1</span><span class="s1">]); 
+        System.out.println(</span><span class="s5">&quot;Longest palindromic subsequence is &quot; </span><span class="s1">+ sols[</span><span class="s4">0</span><span class="s1">][a.length - </span><span class="s4">1</span><span class="s1">]); 
+    } 
+ 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        LongestPalindromicSubsequence lps = </span><span class="s0">new </span><span class="s1">LongestPalindromicSubsequence(); 
+ 
+        lps.a = </span><span class="s5">&quot;A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
+        lps.calculateLPS(); 
+ 
+        lps.a = </span><span class="s5">&quot;A A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
+        lps.calculateLPS(); 
+ 
+        lps.a = </span><span class="s5">&quot;A B&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
+        lps.calculateLPS(); 
+        lps.a = </span><span class="s5">&quot;A B A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
+        lps.calculateLPS(); 
+ 
+        lps.a = </span><span class="s5">&quot;X A Y B Z B A&quot;</span><span class="s1">.split(</span><span class="s5">&quot; &quot;</span><span class="s1">); 
+        lps.calculateLPS(); 
+    } 
+} 
+</span></pre>
 </body>
 </html>
