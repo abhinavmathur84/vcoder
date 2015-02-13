@@ -7,6 +7,8 @@ import java.util.*;
  * of elements in S2 is minimized.
  * For example if A={1,5,4,9,6,3} the we can take S1= {1,4,6,3} and S2={5,9}
  * then sum(S1)-sum(S2)=0
+ *
+ * NOTE: THIS IS BRUTE FORCE. LOOK FOR OPTIMAL SOLUTION
  */
 public class BalancedPartisionOfArray {
 
