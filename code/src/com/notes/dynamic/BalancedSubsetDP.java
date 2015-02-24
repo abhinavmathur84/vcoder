@@ -5,13 +5,13 @@ package com.notes.dynamic;
 
 public class BalancedSubsetDP {
 
-	int f(int i, int lsum) {
+	int diff(int i, int lsum) {
 		if(i==a.length) {
 			return Math.abs(sum(a) - 2*lsum);
 		}
-		return Math.min(f(i+1, lsum+a[i]), f(i+1, lsum));
+		return Math.min(diff(i + 1, lsum + a[i]), diff(i + 1, lsum));
 	}
-	
+	//5,6,1
 	
 	int dp() {
 		int l = a.length;
@@ -43,19 +43,31 @@ public class BalancedSubsetDP {
 	public static void main(String[] args) {
 		{
 			BalancedSubsetDP balancedSet = new BalancedSubsetDP(5, 6, 1);
-			System.out.println("Recursion : " + balancedSet.f(0, 0));
+			System.out.println("Recursion : " + balancedSet.diff(0, 0));
 			System.out.println("DP : " + balancedSet.dp());
 			System.out.println("--");
 		}
 		{
 			BalancedSubsetDP balancedSet = new BalancedSubsetDP(1, 7, 4, 11);
-			System.out.println("Recursion : " + balancedSet.f(0, 0));
+			System.out.println("Recursion : " + balancedSet.diff(0, 0));
 			System.out.println("DP : " + balancedSet.dp());
 			System.out.println("--");
 		}
 		{
 			BalancedSubsetDP balancedSet = new BalancedSubsetDP(1, 5, 4, 9, 6, 3);
-			System.out.println("Recursion : " + balancedSet.f(0, 0));
+			System.out.println("Recursion : " + balancedSet.diff(0, 0));
+			System.out.println("DP : " + balancedSet.dp());
+			System.out.println("--");
+		}
+		{
+			BalancedSubsetDP balancedSet = new BalancedSubsetDP(3,1,1,2,2,1);
+			System.out.println("Recursion : " + balancedSet.diff(0, 0));
+			System.out.println("DP : " + balancedSet.dp());
+			System.out.println("--");
+		}
+		{
+			BalancedSubsetDP balancedSet = new BalancedSubsetDP(1,7,4,11);
+			System.out.println("Recursion : " + balancedSet.diff(0, 0));
 			System.out.println("DP : " + balancedSet.dp());
 			System.out.println("--");
 		}

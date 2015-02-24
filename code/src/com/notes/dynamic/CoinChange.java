@@ -2,7 +2,8 @@ package com.notes.dynamic;
 
 /**
  * Problem Statement:
- * Given coins of denomination v1=1,v2,v3,v4,...,vn in ascending order find minimum number of coins required to make an amount P
+ * Given coins of denomination v1=1,v2,v3,v4,...,vn in ascending order find minimum number of coins required to make
+ * an amount P
  */
 public class CoinChange {
 

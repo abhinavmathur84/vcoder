@@ -159,32 +159,68 @@ public class BalancedPartisionOfArray {
         }
     }
 
+
+
+    public void partitionArrayRecursive() {
+        int sum1; // sum of first subset
+        int sum2; // sum of second subset
+       // now aim is to minimize |sum1-sum2|
+        // diff(i) -> gives minimum difference till A[i],with sum1 and sum2
+        // either add the next element in sum1 or in sum2
+        // diff(i+1) = min {diff(i,sum1+a[i],sum2) diff(i,sum1,sum2+a[i])}
+        // when i =n diff(n) = sum1-sum2 ;// required solution
+        // when i =0 diff(0)= a[0]
+        System.out.println("Recursive Difference = "+ diff(0,0,0));
+    }
+
+
+    int diff(int index,int sum1,int sum2) {
+        if(index == A.length) {
+           return Math.abs(sum1-sum2);
+        }else {
+            int t1 = diff(index+1,sum1+A[index],sum2);// add next element in sum1
+            int t2 = diff(index+1,sum1,sum2+A[index]);// add next element in sum2
+            if(t1<t2){
+               return t1;
+            }else {
+                return t2;
+            }
+
+        }
+    }
+
     public static void main(String[] args) {
         BalancedPartisionOfArray bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{1,5,4,9,6,3};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
         System.out.println();
 
         bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{1,7,4,11};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
         System.out.println();
 
         bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{5,6,1};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
 
         bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{5};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
 
         bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{5,6};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
 
         bpa = new BalancedPartisionOfArray();
         bpa.A = new int[]{3,1,1,2,2,1};
         bpa.partitionArray();
+        bpa.partitionArrayRecursive();
 
 
     }
