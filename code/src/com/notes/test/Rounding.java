@@ -1,17 +1,21 @@
 package com.notes.test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * Created by mathura on 2/23/2015.
  */
 public class Rounding {
 
     public static void main(String[] args) {
-        double d1 = 5.2454;
-        double d2 = 5.24539;
+        double d1 = 1.5401;
+        double d2 = 1.54007;
         int sp =4;
-        double t1 = round(d1,4);
-        double t2 = round(d2,4);
+        double t1 = round(d1,sp);
+        double t2 = round(d2,sp);
         System.out.println(t1);
         System.out.println(t2);
 
@@ -56,6 +60,7 @@ public class Rounding {
             }
         }
     }
+
 
 }
 

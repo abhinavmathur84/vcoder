@@ -164,16 +164,28 @@ public class BalancedPartisionOfArray {
     public void partitionArrayRecursive() {
         int sum1; // sum of first subset
         int sum2; // sum of second subset
-       // now aim is to minimize |sum1-sum2|
-        // diff(i) -> gives minimum difference till A[i],with sum1 and sum2
-        // either add the next element in sum1 or in sum2
-        // diff(i+1) = min {diff(i,sum1+a[i],sum2) diff(i,sum1,sum2+a[i])}
-        // when i =n diff(n) = sum1-sum2 ;// required solution
-        // when i =0 diff(0)= a[0]
+
+        //Approach
+        /**
+         * now aim is to minimize |sum1-sum2|
+         * diff(i)-> gives minimum difference when we include A[i] with sum1 and sum2
+         * either add the next element in sum1 or in sum2
+         * diff(i+1) = min {diff(i,sum1+a[i],sum2) diff(i,sum1,sum2+a[i])}
+         * when i =n diff(n) = sum1-sum2 ;// required solution
+         * Start with index 0 and both sum1 and sum2 are 0 and you need
+         * to decide to add it in sum1 or sum2
+         */
         System.out.println("Recursive Difference = "+ diff(0,0,0));
     }
 
 
+    /**
+     *
+     * @param index
+     * @param sum1
+     * @param sum2
+     * @return
+     */
     int diff(int index,int sum1,int sum2) {
         if(index == A.length) {
            return Math.abs(sum1-sum2);

@@ -1,4 +1,4 @@
-package com.notes.backtracking;
+package com.notes.test;
 
 /**
  * Created by mathura on 2/17/2015.
