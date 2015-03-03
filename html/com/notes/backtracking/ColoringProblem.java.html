@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>ColoringProblem.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+.s5 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ColoringProblem.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.backtracking; 
+ 
+</span><span class="s2">/** 
+ * Given an undirected graph and a number m, determine if the graph can be 
+ * colored with at most m colors such that no two adjacent vertices of the graph 
+ * are colored with same color. Here coloring of a graph means assignment of 
+ * colors to all vertices. 
+ *  
+ * Input: 1) A 2D array graph[V][V] where V is the number of vertices in graph 
+ * and graph[V][V] is adjacency matrix representation of the graph. A value 
+ * graph[i][j] is 1 if there is a direct edge from i to j, otherwise graph[i][j] 
+ * is 0. 2) An integer m which is maximum number of colors that can be used. 
+ *  
+ * Output: An array color[V] that should have numbers from 1 to m. color[i] 
+ * should represent the color assigned to the ith vertex. The code should also 
+ * return false if the graph cannot be colored with m colors. 
+ *  
+ * </span><span class="s3">@author </span><span class="s2">mathura 
+ * 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">ColoringProblem { 
+ 
+    </span><span class="s0">int</span><span class="s1">[][] graph; 
+    </span><span class="s0">int </span><span class="s1">V; 
+    </span><span class="s0">int </span><span class="s1">m; 
+ 
+    </span><span class="s0">int</span><span class="s1">[] color; 
+ 
+    </span><span class="s2">// Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * Assume we color a vertex, check if there exists a color for each of 
+     * connecting vertex, then return true; else retrun false; 
+     *  
+     * so we need canColor(v,c) which return true if v can be colored with color 
+     * c Now have a loop which checks for first vertex for all colors 
+     *  
+     *  
+     */</span><span class="s1"> 
+ 
+     
+    </span><span class="s0">boolean </span><span class="s1">canColor(</span><span class="s0">int </span><span class="s1">vertex, </span><span class="s0">int </span><span class="s1">col) { 
+        </span><span class="s0">int</span><span class="s1">[] adjustantVertx = getAdjustantVertex(vertex); 
+        </span><span class="s2">// if any of the adjusant vertext has color col return false;</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; adjustantVertx.length; i++) { 
+            </span><span class="s0">if </span><span class="s1">(adjustantVertx[i] == </span><span class="s4">1</span><span class="s1">) { </span><span class="s2">// if there is an edge</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(color[i] == col) { </span><span class="s2">// check the color of ith vertex</span><span class="s1"> 
+                    </span><span class="s0">return false</span><span class="s1">; </span><span class="s2">// if same return false</span><span class="s1"> 
+                } 
+            } 
+        } 
+        </span><span class="s2">// if no such vertex found, we can color vertex with col</span><span class="s1"> 
+        </span><span class="s2">// so return true</span><span class="s1"> 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s2">// The main DFS code</span><span class="s1"> 
+    </span><span class="s0">boolean </span><span class="s1">solve(</span><span class="s0">int </span><span class="s1">vertex) { 
+        </span><span class="s0">if </span><span class="s1">(vertex == V - </span><span class="s4">1</span><span class="s1">) { </span><span class="s2">// last vertex</span><span class="s1"> 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; m; i++) { </span><span class="s2">// given list of colors</span><span class="s1"> 
+                </span><span class="s0">if </span><span class="s1">(canColor(vertex, i)) { </span><span class="s2">// we check for each color if it can be used</span><span class="s1"> 
+                    color[vertex] = i; 
+                    </span><span class="s0">return true</span><span class="s1">; </span><span class="s2">// if we find one, return true;</span><span class="s1"> 
+                } 
+            } 
+            </span><span class="s2">// else no color found return false;</span><span class="s1"> 
+            </span><span class="s0">return false</span><span class="s1">; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; m; i++) { </span><span class="s2">// for each color</span><span class="s1"> 
+                </span><span class="s0">boolean </span><span class="s1">canColor = canColor(vertex, i); 
+                System.out.println(</span><span class="s5">&quot;Can color for vertex &quot;</span><span class="s1">+vertex +</span><span class="s5">&quot; with color &quot;</span><span class="s1">+i+</span><span class="s5">&quot; is &quot;</span><span class="s1">+canColor); 
+                </span><span class="s0">if </span><span class="s1">(canColor) {</span><span class="s2">// check if it can be used</span><span class="s1"> 
+                    color[vertex] = i; 
+                    </span><span class="s0">if </span><span class="s1">(solve(vertex + </span><span class="s4">1</span><span class="s1">)) { </span><span class="s2">// check if child is solvable</span><span class="s1"> 
+                        </span><span class="s0">return true</span><span class="s1">; 
+                    } 
+                } 
+            } 
+        } 
+        </span><span class="s2">// if no such color found</span><span class="s1"> 
+        </span><span class="s0">return false</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">int</span><span class="s1">[] getAdjustantVertex(</span><span class="s0">int </span><span class="s1">vertex) { 
+        </span><span class="s0">return </span><span class="s1">graph[vertex]; 
+    } 
+     
+    </span><span class="s2">//v1-&gt; v2,v3,v4</span><span class="s1"> 
+    </span><span class="s2">//v2-&gt; v1,v3</span><span class="s1"> 
+    </span><span class="s2">//v3-&gt; v1,v2,v4</span><span class="s1"> 
+    </span><span class="s2">//v4-&gt; v1,v3</span><span class="s1"> 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        </span><span class="s0">int</span><span class="s1">[][] graph = { { </span><span class="s4">0</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">1 </span><span class="s1">}, { </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0 </span><span class="s1">}, { </span><span class="s4">1</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">1 </span><span class="s1">}, 
+                { </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0</span><span class="s1">, </span><span class="s4">1</span><span class="s1">, </span><span class="s4">0 </span><span class="s1">}, }; 
+        </span><span class="s0">int </span><span class="s1">m = </span><span class="s4">3</span><span class="s1">; </span><span class="s2">// Number of colors</span><span class="s1"> 
+        ColoringProblem c = </span><span class="s0">new </span><span class="s1">ColoringProblem(); 
+        c.color = </span><span class="s0">new int</span><span class="s1">[] {-</span><span class="s4">1</span><span class="s1">,-</span><span class="s4">1</span><span class="s1">,-</span><span class="s4">1</span><span class="s1">,-</span><span class="s4">1</span><span class="s1">}; 
+        c.graph = graph; 
+        c.m = m; 
+        c.V = graph[</span><span class="s4">0</span><span class="s1">].length; 
+ 
+         
+        </span><span class="s0">if </span><span class="s1">(c.solve(</span><span class="s4">0</span><span class="s1">)) { 
+            System.out.println(</span><span class="s5">&quot;true&quot;</span><span class="s1">); 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s1">; i &lt; c.color.length; i++) { 
+                System.out.print(c.color[i]+</span><span class="s4">1 </span><span class="s1">+ </span><span class="s5">&quot;</span><span class="s0">\t</span><span class="s5">&quot;</span><span class="s1">); 
+            } 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            System.out.println(</span><span class="s5">&quot;false&quot;</span><span class="s1">); 
+        } 
+ 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>ScheduleExam.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ScheduleExam.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+</span><span class="s2">/** 
+ * Given S1...Sn as subjects 
+ * find min slots to schedule 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">ScheduleExam { 
+ 
+    </span><span class="s0">int </span><span class="s1">nSubject; 
+    </span><span class="s2">//sS[i][j] = 1 if ith and jth subject has common students</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[][] sS; 
+ 
+    </span><span class="s2">// slots required to schedule i subjects</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[] sols; 
+ 
+ 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * sols[i] = sols[i-1] if for all k</span><span class="s3">&lt;i sS[i][k] =0; so no common student for any of the existing subjects</span><span class="s2"> 
+     *                        and new student 
+     *        =  sols[i-1]+z  for(all the ss[i][k]!=0 z++) 
+     * 
+     * sols[0] = 0 for 0 subjects no slots are required 
+     * sols[1] = 1 for 1 subject 1 slot is required 
+     * 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">void </span><span class="s1">findSlots() { 
+        sols = </span><span class="s0">new int</span><span class="s1">[nSubject+</span><span class="s4">1</span><span class="s1">]; 
+        sols[</span><span class="s4">0</span><span class="s1">] =</span><span class="s4">0</span><span class="s1">; 
+        sols[</span><span class="s4">1</span><span class="s1">] = </span><span class="s4">1</span><span class="s1">; 
+ 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s4">1</span><span class="s1">;i&lt;=nSubject;i++) { 
+            </span><span class="s0">if</span><span class="s1">(sS[i][i-</span><span class="s4">1</span><span class="s1">] == </span><span class="s4">1 </span><span class="s1">){ 
+                sols[i] = sols[i-</span><span class="s4">1</span><span class="s1">]+</span><span class="s4">1</span><span class="s1">; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                sols[i] = sols[i-</span><span class="s4">1</span><span class="s1">]; 
+            } 
+        } 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

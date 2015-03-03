@@ -1,0 +1,266 @@
+<html>
+<head>
+<title>BalancedPartisionOfArray.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(128,128,128); font-style: italic; }
+.s6 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+BalancedPartisionOfArray.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.*; 
+</span><span class="s2">/** 
+ * Partition the multiset &quot;S&quot; of positive integers into two subsets S1, S2 
+ * such that the difference between the sum of elements in S1 and the sum 
+ * of elements in S2 is minimized. 
+ * For example if A={1,5,4,9,6,3} the we can take S1= {1,4,6,3} and S2={5,9} 
+ * then sum(S1)-sum(S2)=0 
+ * 
+ * NOTE: THIS IS BRUTE FORCE. LOOK FOR OPTIMAL SOLUTION 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">BalancedPartisionOfArray { 
+ 
+ 
+    </span><span class="s0">int</span><span class="s1">[] A; 
+ 
+    </span><span class="s0">class </span><span class="s1">SetSum { 
+        </span><span class="s0">private </span><span class="s1">List&lt;Integer&gt; set; 
+        </span><span class="s0">int </span><span class="s1">sum; 
+ 
+        SetSum() { 
+            set = </span><span class="s0">new </span><span class="s1">ArrayList&lt;Integer&gt;(); 
+            sum = </span><span class="s3">0</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">public void </span><span class="s1">print(){ 
+            System.out.print(</span><span class="s4">&quot;{&quot;</span><span class="s1">); 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;set.size();i++) { 
+                </span><span class="s0">if</span><span class="s1">(i!=set.size()-</span><span class="s3">1</span><span class="s1">) 
+                    System.out.print(set.get(i)+</span><span class="s4">&quot;,&quot;</span><span class="s1">); 
+                </span><span class="s0">else</span><span class="s1"> 
+                    System.out.print(set.get(i)); 
+            } 
+            System.out.print(</span><span class="s4">&quot;}&quot;</span><span class="s1">); 
+      } 
+    } 
+ 
+    </span><span class="s0">class </span><span class="s1">SetPair { 
+        SetSum s1; 
+        SetSum s2; 
+ 
+        SetPair(SetSum s1,SetSum s2) { 
+            </span><span class="s0">this</span><span class="s1">.s1 = s1; 
+            </span><span class="s0">this</span><span class="s1">.s2 = s2; 
+        } 
+    } 
+ 
+    </span><span class="s2">// sets.get(i) contains the possible division when array is of length i</span><span class="s1"> 
+    List&lt;List&lt;SetPair&gt;&gt; sets = </span><span class="s0">new </span><span class="s1">ArrayList&lt;List&lt;SetPair&gt;&gt;(); 
+ 
+    </span><span class="s2">// sols[i] is the solution for array of length i</span><span class="s1"> 
+    Map&lt;Integer,SetPair&gt; sols = </span><span class="s0">new </span><span class="s1">HashMap&lt;Integer,SetPair&gt;(); 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * sets.get(0) = {a[0],phi} 
+     * sets.get(1) = {a[0]a[1],phi},{a[0],a[1]} 
+     * sets.get(2) = {a[0]a[1]a[2],phi}{a[0]a[1],a[2]} {a[0]a[2],a[1]} {a[0],a[1]a[2]} 
+     * 
+     * Assume we have calculated sets.get(i); 
+     * now when we have i+1; 
+     *   List</span><span class="s5">&lt;SetPair&gt; </span><span class="s2">l = new ArrayList</span><span class="s5">&lt;SetPair&gt;</span><span class="s2">(); 
+     *   for(each s as setPair in sets.get(i)){ 
+     *      S1= append( s.S1,a[i+1}) // append new element once in S1 
+     *      S2= append (s.S2,a[i+1]) // append new element once in S2 
+     *      l.add(new SetPair(S1,S2))// append new pair 
+     *      } 
+     *   sets.add(l,i+1); add this to i+1 positions 
+     * 
+     * 
+     * Build the solution bottom up by increasing j from 0 to n-1 
+     * 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">public void </span><span class="s1">partitionArray() { 
+        List&lt;SetPair&gt; base = </span><span class="s0">new </span><span class="s1">ArrayList&lt;SetPair&gt;(); 
+        SetSum s = </span><span class="s0">new </span><span class="s1">SetSum(); 
+        s.set.add(A[</span><span class="s3">0</span><span class="s1">]); 
+        s.sum = A[</span><span class="s3">0</span><span class="s1">]; 
+        SetPair p = </span><span class="s0">new </span><span class="s1">SetPair(s,</span><span class="s0">new </span><span class="s1">SetSum()); 
+        base.add(p); 
+        sets.add(base); 
+        sols.put(</span><span class="s3">0</span><span class="s1">, p); 
+        </span><span class="s0">int </span><span class="s1">n = A.length; 
+ 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">1</span><span class="s1">;i&lt;n;i++) { 
+            </span><span class="s2">// get the previous list of pairs</span><span class="s1"> 
+            List&lt;SetPair&gt; existingPairs = sets.get(i-</span><span class="s3">1</span><span class="s1">); 
+            </span><span class="s2">// create a new list to store pairs for this level</span><span class="s1"> 
+            List&lt;SetPair&gt; nextLevel = </span><span class="s0">new </span><span class="s1">ArrayList&lt;SetPair&gt;(); 
+            Iterator&lt;SetPair&gt; itr = existingPairs.iterator(); 
+            </span><span class="s0">while</span><span class="s1">(itr.hasNext()) { </span><span class="s2">// iterate over previous pairs</span><span class="s1"> 
+                SetPair ep = itr.next(); </span><span class="s2">// pick a pair</span><span class="s1"> 
+                SetSum s1 = ep.s1; 
+                SetSum s2 = ep.s2; 
+                SetSum p1 = append(s1,A[i]); </span><span class="s2">// add the element to first set</span><span class="s1"> 
+                SetSum p2 = append(s2,A[i]); </span><span class="s2">// add the element to second set</span><span class="s1"> 
+                </span><span class="s2">// make a new pair with element added to first set keeping second set same</span><span class="s1"> 
+                SetPair pair1 = </span><span class="s0">new </span><span class="s1">SetPair(p1,s2); 
+                </span><span class="s2">// make a new pair with element added to second set keeping first set same</span><span class="s1"> 
+                SetPair pair2 = </span><span class="s0">new </span><span class="s1">SetPair(s1,p2); 
+                </span><span class="s0">if</span><span class="s1">(nextLevel.size() == </span><span class="s3">0</span><span class="s1">) { </span><span class="s2">// if no pairs have been added</span><span class="s1"> 
+                    </span><span class="s2">// compare and put the pair as solution</span><span class="s1"> 
+                    </span><span class="s0">if</span><span class="s1">(compare(pair1, pair2)) { 
+                        sols.put(i, pair1); 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        sols.put(i,pair2); 
+                    } 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s2">// compare with current solution and put it</span><span class="s1"> 
+                     SetPair currentSol = sols.get(i); 
+                      </span><span class="s0">if</span><span class="s1">(compare(pair1, pair2)){ 
+                          </span><span class="s0">if</span><span class="s1">(compare(pair1, currentSol)){ 
+                              sols.put(i, pair1); 
+                          } 
+                      }</span><span class="s0">else </span><span class="s1">{ 
+                          </span><span class="s0">if</span><span class="s1">(compare(pair2, currentSol)){ 
+                              sols.put(i,pair2); 
+                          } 
+                      } 
+                } 
+                </span><span class="s2">// add both the pairs in the current list</span><span class="s1"> 
+                nextLevel.add(pair1); 
+                nextLevel.add(pair2); 
+            } 
+            sets.add(i,nextLevel); 
+        } 
+ 
+        SetPair ans = sols.get(n - </span><span class="s3">1</span><span class="s1">); 
+        System.out.println(</span><span class="s4">&quot;----------------&quot;</span><span class="s1">); 
+        ans.s1.print(); 
+        System.out.println(); 
+        ans.s2.print(); 
+        System.out.println(); 
+        System.out.println(</span><span class="s4">&quot;Difference = &quot;</span><span class="s1">+Math.abs(ans.s1.sum-ans.s2.sum)); 
+ 
+    } 
+ 
+    </span><span class="s0">public boolean </span><span class="s1">compare(SetPair p1,SetPair p2) { 
+        </span><span class="s0">if</span><span class="s1">(Math.abs((p1.s1.sum-p1.s2.sum))&lt; Math.abs(p2.s1.sum-p2.s2.sum)) { 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+        </span><span class="s0">return false</span><span class="s1">; 
+    } 
+ 
+ 
+    SetSum append(SetSum s,</span><span class="s0">int </span><span class="s1">k) { 
+           SetSum ret = </span><span class="s0">new </span><span class="s1">SetSum(); 
+           ret.set.addAll(s.set); 
+           ret.sum = s.sum; 
+           ret.set.add(k); 
+           ret.sum = ret.sum+k; 
+           </span><span class="s0">return </span><span class="s1">ret; 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">printSet(SetSum S) { 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;S.set.size();i++) { 
+            System.out.print(S.set.get(i) + </span><span class="s4">&quot;,&quot;</span><span class="s1">); 
+        } 
+    } 
+ 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">partitionArrayRecursive() { 
+        </span><span class="s0">int </span><span class="s1">sum1; </span><span class="s2">// sum of first subset</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">sum2; </span><span class="s2">// sum of second subset</span><span class="s1"> 
+ 
+        </span><span class="s2">//Approach</span><span class="s1"> 
+        </span><span class="s2">/** 
+         * now aim is to minimize |sum1-sum2| 
+         * diff(i)-&gt; gives minimum difference when we include A[i] with sum1 and sum2 
+         * either add the next element in sum1 or in sum2 
+         * diff(i+1) = min {diff(i,sum1+a[i],sum2) diff(i,sum1,sum2+a[i])} 
+         * when i =n diff(n) = sum1-sum2 ;// required solution 
+         * Start with index 0 and both sum1 and sum2 are 0 and you need 
+         * to decide to add it in sum1 or sum2 
+         */</span><span class="s1"> 
+        System.out.println(</span><span class="s4">&quot;Recursive Difference = &quot;</span><span class="s1">+ diff(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">)); 
+    } 
+ 
+ 
+    </span><span class="s2">/** 
+     * 
+     * </span><span class="s6">@param </span><span class="s2">index 
+     * </span><span class="s6">@param </span><span class="s2">sum1 
+     * </span><span class="s6">@param </span><span class="s2">sum2 
+     * </span><span class="s6">@return</span><span class="s2"> 
+     */</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">diff(</span><span class="s0">int </span><span class="s1">index,</span><span class="s0">int </span><span class="s1">sum1,</span><span class="s0">int </span><span class="s1">sum2) { 
+        </span><span class="s0">if</span><span class="s1">(index == A.length) { 
+           </span><span class="s0">return </span><span class="s1">Math.abs(sum1-sum2); 
+        }</span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">int </span><span class="s1">t1 = diff(index+</span><span class="s3">1</span><span class="s1">,sum1+A[index],sum2);</span><span class="s2">// add next element in sum1</span><span class="s1"> 
+            </span><span class="s0">int </span><span class="s1">t2 = diff(index+</span><span class="s3">1</span><span class="s1">,sum1,sum2+A[index]);</span><span class="s2">// add next element in sum2</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(t1&lt;t2){ 
+               </span><span class="s0">return </span><span class="s1">t1; 
+            }</span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s0">return </span><span class="s1">t2; 
+            } 
+ 
+        } 
+    } 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        BalancedPartisionOfArray bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">1</span><span class="s1">,</span><span class="s3">5</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">9</span><span class="s1">,</span><span class="s3">6</span><span class="s1">,</span><span class="s3">3</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+        System.out.println(); 
+ 
+        bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">1</span><span class="s1">,</span><span class="s3">7</span><span class="s1">,</span><span class="s3">4</span><span class="s1">,</span><span class="s3">11</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+        System.out.println(); 
+ 
+        bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">5</span><span class="s1">,</span><span class="s3">6</span><span class="s1">,</span><span class="s3">1</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+ 
+        bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">5</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+ 
+        bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">5</span><span class="s1">,</span><span class="s3">6</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+ 
+        bpa = </span><span class="s0">new </span><span class="s1">BalancedPartisionOfArray(); 
+        bpa.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s3">3</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">1</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">2</span><span class="s1">,</span><span class="s3">1</span><span class="s1">}; 
+        bpa.partitionArray(); 
+        bpa.partitionArrayRecursive(); 
+ 
+ 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

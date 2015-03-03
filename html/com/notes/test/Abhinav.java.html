@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Abhinav.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+Abhinav.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+</span><span class="s0">public enum </span><span class="s1">Abhinav { 
+ 
+    MONDAY(</span><span class="s2">1</span><span class="s1">,</span><span class="s3">&quot;mon&quot;</span><span class="s1">,</span><span class="s3">&quot;day&quot;</span><span class="s1">), 
+    TUESDAY(</span><span class="s2">0</span><span class="s1">,</span><span class="s3">&quot;tue&quot;</span><span class="s1">,</span><span class="s3">&quot;day&quot;</span><span class="s1">); 
+     
+     
+ 
+    </span><span class="s0">int </span><span class="s1">f1; 
+    String f2; 
+    String f3; 
+    </span><span class="s0">static </span><span class="s1">Abhinav[] ar = </span><span class="s0">new </span><span class="s1">Abhinav[Abhinav.values().length]; 
+     
+    </span><span class="s0">static </span><span class="s1">{ 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s1">;i&lt;ar.length;i++) { 
+            ar[values()[i].f1] = values()[i]; 
+        } 
+    } 
+    </span><span class="s0">private </span><span class="s1">Abhinav(</span><span class="s0">int </span><span class="s1">f1,String f2,String f3) { 
+        </span><span class="s0">this</span><span class="s1">.f1 = f1; 
+        </span><span class="s0">this</span><span class="s1">.f2 = f2; 
+        </span><span class="s0">this</span><span class="s1">.f3 = f3; 
+    } 
+     
+    </span><span class="s0">public static </span><span class="s1">Abhinav fromCode( </span><span class="s0">int </span><span class="s1">code ) { 
+ 
+        </span><span class="s0">if</span><span class="s1">(code&gt;=ar.length) </span><span class="s0">return null</span><span class="s1">; 
+        </span><span class="s0">else return </span><span class="s1">ar[code]; 
+    } 
+} 
+</span></pre>
+</body>
+</html>

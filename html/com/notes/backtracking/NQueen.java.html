@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>NQueen.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NQueen.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.backtracking; 
+ 
+</span><span class="s2">/** 
+ *  1) Is where I am a solution? 
+    2) No.  Ok, where can I go from here?  If I can go somewhere, choose a place to go. 
+    3) Go there. 
+    5) Was that a solution?  If yes, return true! 
+    5) If there are remaining places to go, choose one and goto #3. 
+    6) Out of places to go.  Return false. 
+ *  
+ * 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">NQueen { 
+ 
+    </span><span class="s0">int </span><span class="s1">n; 
+    </span><span class="s0">int</span><span class="s1">[] state; 
+    </span><span class="s0">int </span><span class="s1">UNASSIGNED = -</span><span class="s3">1</span><span class="s1">; 
+     
+    </span><span class="s0">public </span><span class="s1">NQueen(</span><span class="s0">int </span><span class="s1">size) { 
+        n = size; 
+        state = </span><span class="s0">new int</span><span class="s1">[size]; 
+    } 
+     
+    </span><span class="s0">boolean </span><span class="s1">isValid(</span><span class="s0">int </span><span class="s1">row,</span><span class="s0">int </span><span class="s1">col) { 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;row;i++) { 
+            </span><span class="s0">if</span><span class="s1">(state[i] == col) </span><span class="s0">return false</span><span class="s1">; </span><span class="s2">// same column attack</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(Math.abs(i-row) == Math.abs(state[i]-col)) </span><span class="s0">return false</span><span class="s1">; </span><span class="s2">// diagonal attack</span><span class="s1"> 
+        } 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+     
+    
+    </span><span class="s0">static int </span><span class="s1">solcount=</span><span class="s3">0</span><span class="s1">; 
+    </span><span class="s0">public void </span><span class="s1">printQueens(</span><span class="s0">int</span><span class="s1">[] x) { 
+        solcount++; 
+        </span><span class="s0">int </span><span class="s1">N = x.length; 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; N; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; N; j++) { 
+                </span><span class="s0">if </span><span class="s1">(x[i] == j) { 
+                    System.out.print(</span><span class="s4">&quot;Q &quot;</span><span class="s1">); 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    System.out.print(</span><span class="s4">&quot;* &quot;</span><span class="s1">); 
+                } 
+            } 
+            System.out.println(); 
+        } 
+        System.out.println(); 
+    } 
+     
+    </span><span class="s0">public boolean </span><span class="s1">placeGeneric(</span><span class="s0">int </span><span class="s1">row) { 
+        </span><span class="s0">if</span><span class="s1">(row == n) { 
+            </span><span class="s2">//leaf Node </span><span class="s1"> 
+            printQueens(state); 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;n;i++) { 
+                </span><span class="s0">if</span><span class="s1">(isValid(row,i)) { 
+                    state[row] =i; 
+                    </span><span class="s0">if</span><span class="s1">(placeGeneric(row+</span><span class="s3">1</span><span class="s1">)) { 
+                        </span><span class="s0">return true</span><span class="s1">; 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        state[row] = UNASSIGNED; 
+                        </span><span class="s0">continue</span><span class="s1">; 
+                    } 
+                } 
+            } 
+            </span><span class="s0">return false</span><span class="s1">; 
+        } 
+    } 
+     
+    </span><span class="s0">public void </span><span class="s1">place(</span><span class="s0">int </span><span class="s1">row) { 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">if </span><span class="s1">(isValid(row, i)) { 
+                state[row] = i; </span><span class="s2">// mark this as visited</span><span class="s1"> 
+                </span><span class="s0">if</span><span class="s1">(row == n-</span><span class="s3">1</span><span class="s1">) { </span><span class="s2">// leaf node</span><span class="s1"> 
+                    printQueens(state); 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    place(row + </span><span class="s3">1</span><span class="s1">); </span><span class="s2">// go to next level</span><span class="s1"> 
+                } 
+            } 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * </span><span class="s5">@param </span><span class="s2">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        NQueen q = </span><span class="s0">new </span><span class="s1">NQueen(</span><span class="s3">8</span><span class="s1">); 
+        q.place(</span><span class="s3">0</span><span class="s1">); 
+         System.out.println(solcount); 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

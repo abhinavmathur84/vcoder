@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>SolveSudoKu.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+SolveSudoKu.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.backtracking; 
+ 
+</span><span class="s2">/** 
+ *  1) Is where I am a solution? 
+    2) No.  Ok, where can I go from here?  If I can go somewhere, choose a place to go. 
+    3) Go there. 
+    5) Was that a solution?  If yes, return true! 
+    5) If there are remaining places to go, choose one and goto #3. 
+    6) Out of places to go.  Return false. 
+ *  
+ * 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">SolveSudoKu { 
+ 
+    </span><span class="s0">int</span><span class="s1">[][] sudoku; 
+ 
+    </span><span class="s0">int </span><span class="s1">n; 
+ 
+    </span><span class="s0">int </span><span class="s1">val; 
+ 
+    </span><span class="s0">public </span><span class="s1">SolveSudoKu(</span><span class="s0">int </span><span class="s1">n, </span><span class="s0">int</span><span class="s1">[][] sud) { 
+        </span><span class="s0">this</span><span class="s1">.n = n; 
+        val = (</span><span class="s0">int</span><span class="s1">) Math.sqrt(n); 
+        sudoku = sud; 
+ 
+    } 
+ 
+    </span><span class="s0">boolean </span><span class="s1">isValid(</span><span class="s0">int </span><span class="s1">row, </span><span class="s0">int </span><span class="s1">col, </span><span class="s0">int </span><span class="s1">number) { 
+ 
+        </span><span class="s2">// check if the number is present in this row</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">if </span><span class="s1">(sudoku[row][i] == number) </span><span class="s0">return false</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s2">// check if number is present in this col</span><span class="s1"> 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">if </span><span class="s1">(sudoku[i][col] == number) </span><span class="s0">return false</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">int </span><span class="s1">boundingUpperRow = (row / val) * val; 
+        </span><span class="s0">int </span><span class="s1">boundingLowerRow = boundingUpperRow + val - </span><span class="s3">1</span><span class="s1">; 
+ 
+        </span><span class="s0">int </span><span class="s1">boundingColLeft = (col / val) * val; 
+        </span><span class="s0">int </span><span class="s1">boundingColRight = boundingColLeft + val - </span><span class="s3">1</span><span class="s1">; 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = boundingUpperRow; i &lt;= boundingLowerRow; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = boundingColLeft; j &lt;= boundingColRight; j++) { 
+                </span><span class="s0">if </span><span class="s1">(sudoku[i][j] == number) </span><span class="s0">return false</span><span class="s1">; 
+            } 
+        } 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">class </span><span class="s1">Place { 
+        </span><span class="s0">int </span><span class="s1">row; 
+ 
+        </span><span class="s0">int </span><span class="s1">col; 
+ 
+        Place(</span><span class="s0">int </span><span class="s1">r, </span><span class="s0">int </span><span class="s1">c) { 
+            row = r; 
+            col = c; 
+        } 
+    } 
+ 
+    Place findNext() { 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">row = </span><span class="s3">0</span><span class="s1">; row &lt; n; row++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">col = </span><span class="s3">0</span><span class="s1">; col &lt; n; col++) { 
+                </span><span class="s0">if </span><span class="s1">(sudoku[row][col] == -</span><span class="s3">1</span><span class="s1">) { 
+                    </span><span class="s0">return new </span><span class="s1">Place(row, col); 
+                } 
+            } 
+        } 
+        </span><span class="s0">return null</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">public boolean </span><span class="s1">fill() { 
+        Place p = findNext(); 
+        </span><span class="s0">if </span><span class="s1">(p == </span><span class="s0">null</span><span class="s1">) { </span><span class="s2">// leaf node</span><span class="s1"> 
+            print(); 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">num = </span><span class="s3">1</span><span class="s1">; num &lt;= n; num++) { 
+                </span><span class="s0">if </span><span class="s1">(isValid(p.row, p.col, num)) { 
+                    sudoku[p.row][p.col] = num; </span><span class="s2">// mark this visited</span><span class="s1"> 
+                    </span><span class="s0">if</span><span class="s1">(fill()) { 
+                        </span><span class="s0">return true</span><span class="s1">;</span><span class="s2">// go to next level</span><span class="s1"> 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        sudoku[p.row][p.col] =-</span><span class="s3">1</span><span class="s1">; </span><span class="s2">// unmark it visited</span><span class="s1"> 
+                        </span><span class="s0">continue</span><span class="s1">; 
+                    } 
+                } 
+            } 
+            </span><span class="s0">return false</span><span class="s1">; 
+      } 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">print() { 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                System.out.print(sudoku[i][j] + </span><span class="s4">&quot; &quot;</span><span class="s1">); 
+            } 
+            System.out.println(); 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * </span><span class="s5">@param </span><span class="s2">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        </span><span class="s2">// TODO Auto-generated method stub</span><span class="s1"> 
+        </span><span class="s0">int</span><span class="s1">[][] model = </span><span class="s0">new int</span><span class="s1">[</span><span class="s3">9</span><span class="s1">][</span><span class="s3">9</span><span class="s1">]; 
+        </span><span class="s0">int </span><span class="s1">n = </span><span class="s3">9</span><span class="s1">; 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; n; j++) { 
+                model[i][j] = -</span><span class="s3">1</span><span class="s1">; 
+            } 
+        } 
+ 
+        model[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">9</span><span class="s1">; 
+        model[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">4</span><span class="s1">] = </span><span class="s3">2</span><span class="s1">; 
+        model[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">6</span><span class="s1">] = </span><span class="s3">7</span><span class="s1">; 
+        model[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">7</span><span class="s1">] = </span><span class="s3">5</span><span class="s1">; 
+ 
+        model[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">6</span><span class="s1">; 
+        model[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">4</span><span class="s1">] = </span><span class="s3">5</span><span class="s1">; 
+        model[</span><span class="s3">1</span><span class="s1">][</span><span class="s3">7</span><span class="s1">] = </span><span class="s3">4</span><span class="s1">; 
+ 
+        model[</span><span class="s3">2</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">2</span><span class="s1">; 
+        model[</span><span class="s3">2</span><span class="s1">][</span><span class="s3">3</span><span class="s1">] = </span><span class="s3">4</span><span class="s1">; 
+        model[</span><span class="s3">2</span><span class="s1">][</span><span class="s3">7</span><span class="s1">] = </span><span class="s3">1</span><span class="s1">; 
+ 
+        model[</span><span class="s3">3</span><span class="s1">][</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">2</span><span class="s1">; 
+        model[</span><span class="s3">3</span><span class="s1">][</span><span class="s3">2</span><span class="s1">] = </span><span class="s3">8</span><span class="s1">; 
+ 
+        model[</span><span class="s3">4</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">7</span><span class="s1">; 
+        model[</span><span class="s3">4</span><span class="s1">][</span><span class="s3">3</span><span class="s1">] = </span><span class="s3">5</span><span class="s1">; 
+        model[</span><span class="s3">4</span><span class="s1">][</span><span class="s3">5</span><span class="s1">] = </span><span class="s3">9</span><span class="s1">; 
+        model[</span><span class="s3">4</span><span class="s1">][</span><span class="s3">7</span><span class="s1">] = </span><span class="s3">6</span><span class="s1">; 
+ 
+        model[</span><span class="s3">5</span><span class="s1">][</span><span class="s3">6</span><span class="s1">] = </span><span class="s3">4</span><span class="s1">; 
+        model[</span><span class="s3">5</span><span class="s1">][</span><span class="s3">8</span><span class="s1">] = </span><span class="s3">1</span><span class="s1">; 
+ 
+        model[</span><span class="s3">6</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">1</span><span class="s1">; 
+        model[</span><span class="s3">6</span><span class="s1">][</span><span class="s3">5</span><span class="s1">] = </span><span class="s3">5</span><span class="s1">; 
+        model[</span><span class="s3">6</span><span class="s1">][</span><span class="s3">7</span><span class="s1">] = </span><span class="s3">8</span><span class="s1">; 
+ 
+        model[</span><span class="s3">7</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">9</span><span class="s1">; 
+        model[</span><span class="s3">7</span><span class="s1">][</span><span class="s3">4</span><span class="s1">] = </span><span class="s3">7</span><span class="s1">; 
+        model[</span><span class="s3">7</span><span class="s1">][</span><span class="s3">8</span><span class="s1">] = </span><span class="s3">4</span><span class="s1">; 
+ 
+        model[</span><span class="s3">8</span><span class="s1">][</span><span class="s3">1</span><span class="s1">] = </span><span class="s3">8</span><span class="s1">; 
+        model[</span><span class="s3">8</span><span class="s1">][</span><span class="s3">2</span><span class="s1">] = </span><span class="s3">2</span><span class="s1">; 
+        model[</span><span class="s3">8</span><span class="s1">][</span><span class="s3">4</span><span class="s1">] = </span><span class="s3">4</span><span class="s1">; 
+        model[</span><span class="s3">8</span><span class="s1">][</span><span class="s3">8</span><span class="s1">] = </span><span class="s3">6</span><span class="s1">; 
+ 
+        SolveSudoKu solver = </span><span class="s0">new </span><span class="s1">SolveSudoKu(n, model); 
+        solver.print(); 
+ 
+        solver.fill(); 
+ 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

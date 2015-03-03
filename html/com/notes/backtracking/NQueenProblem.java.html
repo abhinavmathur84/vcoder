@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>NQueenProblem.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+NQueenProblem.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.backtracking; 
+ 
+</span><span class="s0">public class </span><span class="s1">NQueenProblem { 
+     
+     
+    </span><span class="s0">int </span><span class="s1">n; 
+    </span><span class="s0">int</span><span class="s1">[] state; 
+     
+    </span><span class="s0">boolean </span><span class="s1">place(</span><span class="s0">int </span><span class="s1">row, </span><span class="s0">int </span><span class="s1">col) { 
+        </span><span class="s0">if </span><span class="s1">(isLeaf(row)) { 
+            </span><span class="s0">if </span><span class="s1">(isValid(row, col)) { 
+                state[row] = col; 
+                print(state); 
+                </span><span class="s0">return true</span><span class="s1">; 
+            } 
+            </span><span class="s0">return false</span><span class="s1">; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">if </span><span class="s1">(isValid(row, col)) { 
+                state[row] = col; 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s1">; i &lt; n; i++) { 
+                    </span><span class="s0">if </span><span class="s1">(place(row + </span><span class="s2">1</span><span class="s1">, i)) { 
+                        </span><span class="s0">return true</span><span class="s1">; 
+                    } 
+                } 
+            }  
+            </span><span class="s0">return false</span><span class="s1">; 
+        } 
+    } 
+     
+     </span><span class="s0">public void </span><span class="s1">print(</span><span class="s0">int</span><span class="s1">[] x) { 
+            </span><span class="s0">int </span><span class="s1">N = x.length; 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s2">0</span><span class="s1">; i &lt; N; i++) { 
+                </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s2">0</span><span class="s1">; j &lt; N; j++) { 
+                    </span><span class="s0">if </span><span class="s1">(x[i] == j) { 
+                        System.out.print(</span><span class="s3">&quot;Q &quot;</span><span class="s1">); 
+                    } </span><span class="s0">else </span><span class="s1">{ 
+                        System.out.print(</span><span class="s3">&quot;* &quot;</span><span class="s1">); 
+                    } 
+                } 
+                System.out.println(); 
+            } 
+            System.out.println(); 
+    } 
+      
+    </span><span class="s0">boolean </span><span class="s1">isLeaf(</span><span class="s0">int </span><span class="s1">row) { 
+        </span><span class="s0">return </span><span class="s1">row == n-</span><span class="s2">1</span><span class="s1">; 
+    } 
+     
+     </span><span class="s0">boolean </span><span class="s1">isValid(</span><span class="s0">int </span><span class="s1">row,</span><span class="s0">int </span><span class="s1">col) { 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s1">;i&lt;row;i++) { 
+                </span><span class="s0">if</span><span class="s1">(state[i] == col) </span><span class="s0">return false</span><span class="s1">; </span><span class="s4">// same column attack</span><span class="s1"> 
+                </span><span class="s0">if</span><span class="s1">(Math.abs(i-row) == Math.abs(state[i]-col)) </span><span class="s0">return false</span><span class="s1">; </span><span class="s4">// diagonal attack</span><span class="s1"> 
+            } 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+     
+</span><span class="s0">public  static void </span><span class="s1">main(String[] args) 
+{ 
+    </span><span class="s0">int</span><span class="s1">[] a = </span><span class="s0">new int</span><span class="s1">[</span><span class="s2">8</span><span class="s1">]; 
+    NQueenProblem q = </span><span class="s0">new </span><span class="s1">NQueenProblem(); 
+    q.state = a; 
+    q.n = a.length; 
+    </span><span class="s4">//q.place(0, 0);</span><span class="s1"> 
+    </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s1">;i&lt;a.length;i++) 
+        q.place(</span><span class="s2">0</span><span class="s1">, i); 
+             
+} 
+ 
+} 
+</span></pre>
+</body>
+</html>

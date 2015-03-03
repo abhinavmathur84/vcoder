@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>StringPermutation.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+StringPermutation.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+</span><span class="s2">/** 
+ * Created by mathura on 3/2/2015. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">StringPermutation { 
+ 
+    </span><span class="s2">// the input string</span><span class="s1"> 
+    String str; 
+ 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * Let each node be a string of some length 
+     * so if ABCD is the input string, 
+     * it will have child nodes of length 3 ie its length-1 
+     * Solve function will return true when it has computed permutations of 
+     * the passed node. 
+     * 
+     */</span><span class="s1"> 
+ 
+    </span><span class="s0">boolean </span><span class="s1">solve(String s) { 
+        </span><span class="s0">if</span><span class="s1">(s.length() == str.length()) { 
+            System.out.println(s); 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;s.length();i++) { 
+                </span><span class="s0">if</span><span class="s1">(solve(s.substring(</span><span class="s3">0</span><span class="s1">,i)) &amp;&amp; s.substring(i+</span><span class="s3">1</span><span class="s1">,s.length())) { 
+ 
+                } 
+            } 
+        } 
+    } 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

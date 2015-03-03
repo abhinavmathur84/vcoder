@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>BalancedSubsetDP.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+BalancedSubsetDP.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+ 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">BalancedSubsetDP { 
+ 
+    </span><span class="s0">int </span><span class="s1">diff(</span><span class="s0">int </span><span class="s1">i, </span><span class="s0">int </span><span class="s1">lsum) { 
+        </span><span class="s0">if</span><span class="s1">(i==a.length) { 
+            </span><span class="s0">return </span><span class="s1">Math.abs(sum(a) - </span><span class="s2">2</span><span class="s1">*lsum); 
+        } 
+        </span><span class="s0">return </span><span class="s1">Math.min(diff(i + </span><span class="s2">1</span><span class="s1">, lsum + a[i]), diff(i + </span><span class="s2">1</span><span class="s1">, lsum)); 
+    } 
+    </span><span class="s3">//5,6,1</span><span class="s1"> 
+     
+    </span><span class="s0">int </span><span class="s1">dp() { 
+        </span><span class="s0">int </span><span class="s1">l = a.length; 
+        </span><span class="s0">int </span><span class="s1">T = sum(a); 
+        </span><span class="s0">int </span><span class="s1">c[][] = </span><span class="s0">new int</span><span class="s1">[l][T+</span><span class="s2">1</span><span class="s1">]; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s1">;i&lt;l;i++) { 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">j=</span><span class="s2">0</span><span class="s1">;j&lt;T+</span><span class="s2">1</span><span class="s1">;j++) { 
+                c[i][j] = Integer.MAX_VALUE; 
+            } 
+        } 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">k=</span><span class="s2">0</span><span class="s1">;k&lt;T+</span><span class="s2">1</span><span class="s1">;k++) { 
+            c[l-</span><span class="s2">1</span><span class="s1">][k] = Math.min(Math.abs(T-</span><span class="s2">2</span><span class="s1">*k), Math.abs(T-</span><span class="s2">2</span><span class="s1">*(k+a[l-</span><span class="s2">1</span><span class="s1">])) ); 
+        } 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=l-</span><span class="s2">2</span><span class="s1">;i&gt;=</span><span class="s2">0</span><span class="s1">;i--) { 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">j=</span><span class="s2">0</span><span class="s1">;j&lt;T+</span><span class="s2">1</span><span class="s1">-a[i];j++) { 
+                c[i][j] =Math.min(c[i+</span><span class="s2">1</span><span class="s1">][j+a[i]], c[i+</span><span class="s2">1</span><span class="s1">][j]); 
+            } 
+        } 
+        </span><span class="s0">return </span><span class="s1">c[</span><span class="s2">0</span><span class="s1">][</span><span class="s2">0</span><span class="s1">]; 
+    } 
+     
+     
+    </span><span class="s0">public </span><span class="s1">BalancedSubsetDP(</span><span class="s0">int </span><span class="s1">... a) { 
+        </span><span class="s0">this</span><span class="s1">.a = a; 
+    } 
+ 
+    </span><span class="s0">int </span><span class="s1">a[] ; 
+     
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        { 
+            BalancedSubsetDP balancedSet = </span><span class="s0">new </span><span class="s1">BalancedSubsetDP(</span><span class="s2">5</span><span class="s1">, </span><span class="s2">6</span><span class="s1">, </span><span class="s2">1</span><span class="s1">); 
+            System.out.println(</span><span class="s4">&quot;Recursion : &quot; </span><span class="s1">+ balancedSet.diff(</span><span class="s2">0</span><span class="s1">, </span><span class="s2">0</span><span class="s1">)); 
+            System.out.println(</span><span class="s4">&quot;DP : &quot; </span><span class="s1">+ balancedSet.dp()); 
+            System.out.println(</span><span class="s4">&quot;--&quot;</span><span class="s1">); 
+        } 
+        { 
+            BalancedSubsetDP balancedSet = </span><span class="s0">new </span><span class="s1">BalancedSubsetDP(</span><span class="s2">1</span><span class="s1">, </span><span class="s2">7</span><span class="s1">, </span><span class="s2">4</span><span class="s1">, </span><span class="s2">11</span><span class="s1">); 
+            System.out.println(</span><span class="s4">&quot;Recursion : &quot; </span><span class="s1">+ balancedSet.diff(</span><span class="s2">0</span><span class="s1">, </span><span class="s2">0</span><span class="s1">)); 
+            System.out.println(</span><span class="s4">&quot;DP : &quot; </span><span class="s1">+ balancedSet.dp()); 
+            System.out.println(</span><span class="s4">&quot;--&quot;</span><span class="s1">); 
+        } 
+        { 
+            BalancedSubsetDP balancedSet = </span><span class="s0">new </span><span class="s1">BalancedSubsetDP(</span><span class="s2">1</span><span class="s1">, </span><span class="s2">5</span><span class="s1">, </span><span class="s2">4</span><span class="s1">, </span><span class="s2">9</span><span class="s1">, </span><span class="s2">6</span><span class="s1">, </span><span class="s2">3</span><span class="s1">); 
+            System.out.println(</span><span class="s4">&quot;Recursion : &quot; </span><span class="s1">+ balancedSet.diff(</span><span class="s2">0</span><span class="s1">, </span><span class="s2">0</span><span class="s1">)); 
+            System.out.println(</span><span class="s4">&quot;DP : &quot; </span><span class="s1">+ balancedSet.dp()); 
+            System.out.println(</span><span class="s4">&quot;--&quot;</span><span class="s1">); 
+        } 
+        { 
+            BalancedSubsetDP balancedSet = </span><span class="s0">new </span><span class="s1">BalancedSubsetDP(</span><span class="s2">3</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">1</span><span class="s1">); 
+            System.out.println(</span><span class="s4">&quot;Recursion : &quot; </span><span class="s1">+ balancedSet.diff(</span><span class="s2">0</span><span class="s1">, </span><span class="s2">0</span><span class="s1">)); 
+            System.out.println(</span><span class="s4">&quot;DP : &quot; </span><span class="s1">+ balancedSet.dp()); 
+            System.out.println(</span><span class="s4">&quot;--&quot;</span><span class="s1">); 
+        } 
+        { 
+            BalancedSubsetDP balancedSet = </span><span class="s0">new </span><span class="s1">BalancedSubsetDP(</span><span class="s2">1</span><span class="s1">,</span><span class="s2">7</span><span class="s1">,</span><span class="s2">4</span><span class="s1">,</span><span class="s2">11</span><span class="s1">); 
+            System.out.println(</span><span class="s4">&quot;Recursion : &quot; </span><span class="s1">+ balancedSet.diff(</span><span class="s2">0</span><span class="s1">, </span><span class="s2">0</span><span class="s1">)); 
+            System.out.println(</span><span class="s4">&quot;DP : &quot; </span><span class="s1">+ balancedSet.dp()); 
+            System.out.println(</span><span class="s4">&quot;--&quot;</span><span class="s1">); 
+        } 
+    } 
+     
+    </span><span class="s0">public static int </span><span class="s1">sum(</span><span class="s0">int </span><span class="s1">a []) { 
+        </span><span class="s0">int </span><span class="s1">sum = </span><span class="s2">0</span><span class="s1">; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i : a) { 
+            sum = sum + i; 
+        } 
+        </span><span class="s0">return </span><span class="s1">sum; 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>
