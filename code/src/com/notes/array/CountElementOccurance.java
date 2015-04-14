@@ -58,7 +58,7 @@ public class CountElementOccurance {
 	
 
 	public static void main(String[] args) {
-		int[] A = {2,3,4,4,4,4,4,5,6,7,8};
+		int[] A = {2,4,4,4,4,4,5,6,7,8};
 		CountElementOccurance f = new CountElementOccurance();
 		f.A = A;
 		int first = f.first(0, A.length, 4);

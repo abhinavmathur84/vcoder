@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>FindCommonAncestor.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+FindCommonAncestor.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.trees; 
+ 
+</span><span class="s2">/** 
+ * Given a binary tree and 2 nodes, find common ancestor for them 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">FindCommonAncestor { 
+ 
+    </span><span class="s0">class </span><span class="s1">Node { 
+        </span><span class="s0">int </span><span class="s1">i; 
+        Node left; 
+        Node right; 
+    } 
+ 
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     *  Node findCommonAncestor(Node n, Node n1,Node n2) { 
+     *      if(n == null) { // if we have reached a null node 
+     *          return null; 
+     *      } 
+     *      else { 
+     *              //both n1 and n2 are present in subtree rooted at n 
+     *              if(contains(n,n1) &amp;&amp; contains(n,n2)) { 
+     *                  if(contains(n.left,n1) &amp;&amp; contains(n.left,n2)) // both present in left subtree 
+     *                  { 
+     *                      return findCommonAncestor(n.left,n1,n2); 
+     *                  } 
+     *                  else if(contains(n.right,n1) &amp;&amp; contains(n.right.n2)) // both present in right subtree 
+     *                  { 
+     *                      return findCommonAncestor(n.right,n1,n2); 
+     *                  } 
+     *                  else  // one present in left and one in right 
+     *                  { 
+     *                      return n; 
+     *                  } 
+     *              } else { 
+     *                  //subtree rooted at n does not contains node n1 or n2 
+     *                  // since we start it with root, and either n1 or n2 is not present 
+     *                  // we can return false 
+     *                  //otherwise previous logic will take care 
+     * 
+     *              } 
+     *          } 
+     *  } 
+     * 
+     *  // returns true if subtree rooted at n contains n1 
+     *  NodeChild contains(Node n, Node n1) { 
+     *      if(n == null) return false; 
+     *      return contains(n.left,n1) || contains(n.right,n1) 
+     * 
+     *  } 
+     */</span><span class="s1"> 
+ 
+ 
+ 
+ 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

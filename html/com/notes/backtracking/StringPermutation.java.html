@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>StringPermutation.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+StringPermutation.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.backtracking; 
+ 
+</span><span class="s2">/** 
+ * Created by mathura on 3/2/2015. 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">StringPermutation { 
+ 
+    </span><span class="s2">// the input string</span><span class="s1"> 
+    String str; 
+    </span><span class="s0">int </span><span class="s1">i=</span><span class="s3">1</span><span class="s1">; 
+    </span><span class="s0">char</span><span class="s1">[] arr; 
+    </span><span class="s0">void </span><span class="s1">permute(String s,String path){ 
+        </span><span class="s0">int </span><span class="s1">length = s.length(); 
+        </span><span class="s0">if</span><span class="s1">(s.length() ==</span><span class="s3">0</span><span class="s1">) { 
+            System.out.println(i+</span><span class="s4">&quot;</span><span class="s0">\t</span><span class="s4">&quot;</span><span class="s1">+path); 
+            i++; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;length;i++) { 
+                permute(s.substring(</span><span class="s3">0</span><span class="s1">,i)+s.substring(i+</span><span class="s3">1</span><span class="s1">,length), path+s.charAt(i)); 
+            } 
+        } 
+   } 
+     
+    </span><span class="s0">void </span><span class="s1">permuteInPlace(</span><span class="s0">int </span><span class="s1">i) { 
+     
+    } 
+     
+     
+   </span><span class="s2">//</span><span class="s1"> 
+   </span><span class="s2">/** 
+    *  
+    *  
+    *  
+    * abcd                                         c=0 
+    * bacd 
+    * bcad 
+    * bcda  swap=1, till you reach length, index=0,c=1 
+    * cbda 
+    * cdba 
+    * cdab                                        c=2 
+    * dcab 
+    * dacb 
+    * dabc                                        c=3 
+    * adbc 
+    * abdc 
+    * abcd                                        c=4, if start string index=1,swap=1 
+    * acbd                                         
+    * acdb 
+    * adcb 
+    * adbc 
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    *  
+    */</span><span class="s1"> 
+     
+     
+    
+    
+    
+   </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+       StringPermutation sp = </span><span class="s0">new </span><span class="s1">StringPermutation(); 
+       sp.str=</span><span class="s4">&quot;abc&quot;</span><span class="s1">; 
+       sp.permute(sp.str, </span><span class="s4">&quot;&quot;</span><span class="s1">); 
+       System.out.println(</span><span class="s4">&quot;---------------------------&quot;</span><span class="s1">); 
+       sp.i=</span><span class="s3">1</span><span class="s1">; 
+       sp.permute(</span><span class="s4">&quot;abcd&quot;</span><span class="s1">, </span><span class="s4">&quot;&quot;</span><span class="s1">); 
+   } 
+ 
+ 
+ 
+ 
+} 
+</span></pre>
+</body>
+</html>

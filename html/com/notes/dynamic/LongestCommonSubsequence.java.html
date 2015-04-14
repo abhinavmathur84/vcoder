@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>LongestCommonSubsequence.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+LongestCommonSubsequence.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.dynamic; 
+ 
+</span><span class="s0">public class </span><span class="s1">LongestCommonSubsequence { 
+ 
+     
+    String A; 
+    String B; 
+         
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     *  
+     * Start with 0 th char (ith char) 
+     *    if they are equal return the solution for 1st (i+1th and j+1 th char) and increment current length by 1 
+     *    if they are not equal, try by increasing length of A by 1 and keeping length of B as same 
+     *                           try by increasing length of B by 1 and keeping length of A as same 
+     *    return which ever is maximum 
+     *     
+     *    when we have reached at end of string return whatever length we have found till now 
+     *     
+     *     
+     *  max(abc,abc,0,0,0) 
+     *      max(bc,bc,0,0,1) 
+     *  
+     */</span><span class="s1"> 
+    Sol maxRecursive(String s1,String s2,</span><span class="s0">int </span><span class="s1">i,</span><span class="s0">int </span><span class="s1">j,</span><span class="s0">int </span><span class="s1">m,String subseqence) { 
+        </span><span class="s0">if</span><span class="s1">(s1.length() == </span><span class="s3">0 </span><span class="s1">|| s2.length() == </span><span class="s3">0</span><span class="s1">) { 
+            </span><span class="s0">return new </span><span class="s1">Sol(m,subseqence); 
+        } 
+        </span><span class="s2">// so either</span><span class="s1"> 
+        </span><span class="s0">if</span><span class="s1">(s1.charAt(i) == s2.charAt(j)) { </span><span class="s2">// if current char are same</span><span class="s1"> 
+             </span><span class="s2">// chose both s1[i] and s2[j] and increase length by 1</span><span class="s1"> 
+            Sol s = maxRecursive(s1.substring(i+</span><span class="s3">1</span><span class="s1">, s1.length()),s2.substring(j+</span><span class="s3">1</span><span class="s1">, s2.length()),i,i,m+</span><span class="s3">1</span><span class="s1">,subseqence+s1.charAt(i)); 
+            </span><span class="s0">return </span><span class="s1">s; 
+        } 
+        </span><span class="s0">else </span><span class="s1">{ 
+            Sol sol1  =  maxRecursive(s1.substring(i+</span><span class="s3">1</span><span class="s1">,s1.length()),s2,i,j,m,subseqence); </span><span class="s2">// check by next char of s1</span><span class="s1"> 
+            Sol sol2  = maxRecursive(s1,s2.substring(j+</span><span class="s3">1</span><span class="s1">,s2.length()),i,j,m,subseqence); </span><span class="s2">// check by next char of s2</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(sol1.i&gt;sol2.i) { 
+                </span><span class="s0">return  </span><span class="s1">sol1; 
+            }</span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s0">return </span><span class="s1">sol2; 
+            } 
+        } 
+    } 
+     
+    </span><span class="s0">class </span><span class="s1">Sol { 
+        </span><span class="s0">int </span><span class="s1">i; 
+        String s; 
+        Sol(</span><span class="s0">int </span><span class="s1">i,String s) { 
+            </span><span class="s0">this</span><span class="s1">.i =i; 
+            </span><span class="s0">this</span><span class="s1">.s = s; 
+        } 
+    } 
+     
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * let LCS[i,j] be solutions for A[1..i] and B[1..j] 
+     * now LCS[i+1,j+1] = LCS[i,j]+1 if(A[i+1]=B[j+1]) 
+     *                   Max(LCS[i+1,j],LCS[i,j+1]) other wise 
+     * We need to calculate L[m,n] 
+     * L[0][0] = max(L[0,1],L[1,0]) 
+     *  
+     * L[0][i] = 1 if any B[i] = A[0]  
+     *         = 0 otherwise 
+     * L[i][0] = 1  if any A[i] = B[0] 
+     *         = 0  otherwise 
+     *   
+     */</span><span class="s1"> 
+    </span><span class="s0">void </span><span class="s1">calculate() { 
+        </span><span class="s0">int </span><span class="s1">m = A.length(); 
+        </span><span class="s0">int </span><span class="s1">n = B.length(); 
+        </span><span class="s0">int</span><span class="s1">[][] LCS = </span><span class="s0">new int</span><span class="s1">[m+</span><span class="s3">1</span><span class="s1">][n+</span><span class="s3">1</span><span class="s1">]; 
+         
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;n;i++){ 
+            </span><span class="s0">if</span><span class="s1">(B.charAt(i) == A.charAt(</span><span class="s3">0</span><span class="s1">)) { 
+                LCS[</span><span class="s3">0</span><span class="s1">][i] = </span><span class="s3">1</span><span class="s1">; 
+            } 
+        } 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">j=</span><span class="s3">0</span><span class="s1">;j&lt;m;j++) { 
+            </span><span class="s0">if</span><span class="s1">(A.charAt(j) == B.charAt(</span><span class="s3">0</span><span class="s1">)) { 
+                LCS[j][</span><span class="s3">0</span><span class="s1">] = </span><span class="s3">1</span><span class="s1">; 
+            } 
+        } 
+         
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;m;i++) { 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">j=</span><span class="s3">0</span><span class="s1">;j&lt;n;j++) { 
+                </span><span class="s0">if</span><span class="s1">(A.charAt(i) == B.charAt(j)) { 
+                    LCS[i+</span><span class="s3">1</span><span class="s1">][j+</span><span class="s3">1</span><span class="s1">] = LCS[i][j]+</span><span class="s3">1</span><span class="s1">; 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    </span><span class="s0">int </span><span class="s1">t1 = LCS[i][j+</span><span class="s3">1</span><span class="s1">]; 
+                    </span><span class="s0">int </span><span class="s1">t2 = LCS[i+</span><span class="s3">1</span><span class="s1">][j]; 
+                    LCS[i+</span><span class="s3">1</span><span class="s1">][j+</span><span class="s3">1</span><span class="s1">] = Math.max(t1, t2); 
+                } 
+            } 
+        } 
+        System.out.println(LCS[m-</span><span class="s3">1</span><span class="s1">][n-</span><span class="s3">1</span><span class="s1">]); 
+    } 
+     
+     
+     
+     
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        LongestCommonSubsequence lcs = </span><span class="s0">new </span><span class="s1">LongestCommonSubsequence(); 
+        String s1 = </span><span class="s4">&quot;abceeeeeeeedggg&quot;</span><span class="s1">; 
+        String s2 = </span><span class="s4">&quot;abcssssssssssssssssssssssd&quot;</span><span class="s1">; 
+        System.out.println(lcs.maxRecursive(s1, s2, </span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s4">&quot;&quot;</span><span class="s1">).s); 
+        lcs.A = s1; 
+        lcs.B = s2; 
+        lcs.calculate(); 
+        String s3 = </span><span class="s4">&quot;abcssssssssssssssssssssssdfg&quot;</span><span class="s1">; 
+        System.out.println(lcs.maxRecursive(s1, s3, </span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s4">&quot;&quot;</span><span class="s1">).s); 
+        lcs.A = s1; 
+        lcs.B = s3; 
+        lcs.calculate(); 
+    } 
+     
+     
+} 
+</span></pre>
+</body>
+</html>

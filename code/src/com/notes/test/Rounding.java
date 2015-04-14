@@ -43,6 +43,38 @@ public class Rounding {
      * @param scale the number of digits to the right of the decimal point.
      * @param roundingMethod the rounding method as defined in
      *        {@link BigDecimal}.
+     *        
+     *        
+     *        
+     *   List<> arrays
+     *   
+     *   f(int depth,String str) {
+     *   	int n = arrays.size()-1;
+     *   	if(depth == n))
+     *   	{
+     *   		String[] a = arrays.get(n);
+     *   		for(int i=0;i<a.length;i++){
+     *   			System.out.println(str+" "+a[i]);
+     *   		}
+     *   	}else {
+     *   		String[] a = arrays.get(depth);
+     *          for(int i=0;i<a.length;i++) {
+     *          	f(depth+1,str+" "+a[i]);
+     *          }
+     *   	}
+     *   }
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
+     *        
      * @return the rounded value.
      * @since 1.1
      */

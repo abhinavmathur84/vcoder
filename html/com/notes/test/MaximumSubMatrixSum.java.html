@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>MaximumSubMatrixSum.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MaximumSubMatrixSum.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+</span><span class="s2">/** 
+ * Given a 2D array, find the maximum sum subarray in it 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">MaximumSubMatrixSum { 
+ 
+    </span><span class="s0">int</span><span class="s1">[][] A; 
+    </span><span class="s0">int </span><span class="s1">r; 
+    </span><span class="s0">int </span><span class="s1">c; 
+     
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * f(i,j,sum) { 
+     *  
+     *   if(i &gt; row || j &gt; col)  
+     *      return sum;     // this is max sum we have found 
+     *   int t1 = f(i+1,j,sum+A[i][j]) // sum if we include A[i][j] and move in same row 
+     *   int t3 = f(i,j+1,sum+A[i][j]) // sum if we include A[j][j] and move in same col 
+     *       
+     *   // if we dont include A[i][j] 
+     *   t2 = Math.max(f(i+1,j,sum) // move in row 
+     *        f(i,j+1,sum) // move in col 
+     *        f(i+1,j+1,sum)) // move in diag                
+     *   
+     *    return Math.max(t1,t2,t3); 
+     *  
+     * } 
+     *  
+     * call with f(0,0,0); 
+     *  
+     *  
+     *  
+     *  
+     */</span><span class="s1"> 
+     
+    </span><span class="s0">int </span><span class="s1">f(</span><span class="s0">int </span><span class="s1">i,</span><span class="s0">int </span><span class="s1">j,</span><span class="s0">int </span><span class="s1">sum) { 
+        </span><span class="s0">if</span><span class="s1">(i&gt;=r || j&gt;=c) { 
+            </span><span class="s0">return </span><span class="s1">sum; 
+        } </span><span class="s0">else </span><span class="s1">{ 
+             
+            </span><span class="s0">int </span><span class="s1">t1 = f(i+</span><span class="s3">1</span><span class="s1">,j,sum+A[i][j]); 
+            </span><span class="s0">int </span><span class="s1">t2 = f(i,j+</span><span class="s3">1</span><span class="s1">,sum+A[i][j]); 
+            </span><span class="s0">int </span><span class="s1">diagMove = f(i+</span><span class="s3">1</span><span class="s1">, j+</span><span class="s3">1</span><span class="s1">,sum); 
+            </span><span class="s0">int </span><span class="s1">rowMove = f(i+</span><span class="s3">1</span><span class="s1">,j,sum); 
+            </span><span class="s0">int </span><span class="s1">colMove = f(i,j+</span><span class="s3">1</span><span class="s1">,sum); 
+            </span><span class="s0">int </span><span class="s1">t3 = Math.max(diagMove,Math.max(rowMove,colMove)); 
+            </span><span class="s0">int </span><span class="s1">max = Math.max(t1,Math.max(t2, t3)); 
+             
+            </span><span class="s0">return </span><span class="s1">max; 
+        } 
+    } 
+     
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+         </span><span class="s0">int</span><span class="s1">[][] m = {{</span><span class="s3">1</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">, -</span><span class="s3">4</span><span class="s1">, -</span><span class="s3">20</span><span class="s1">}, 
+                 {-</span><span class="s3">8</span><span class="s1">, -</span><span class="s3">3</span><span class="s1">, </span><span class="s3">4</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">1</span><span class="s1">}, 
+                 {</span><span class="s3">3</span><span class="s1">, </span><span class="s3">8</span><span class="s1">, </span><span class="s3">10</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">3</span><span class="s1">}, 
+                 {-</span><span class="s3">4</span><span class="s1">, -</span><span class="s3">1</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">7</span><span class="s1">, -</span><span class="s3">6</span><span class="s1">} 
+                }; 
+         MaximumSubMatrixSum mss = </span><span class="s0">new </span><span class="s1">MaximumSubMatrixSum(); 
+         mss.A = m; 
+         mss.r = </span><span class="s3">4</span><span class="s1">; 
+         mss.c = </span><span class="s3">5</span><span class="s1">; 
+         System.out.println(mss.f(</span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">0</span><span class="s1">)); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

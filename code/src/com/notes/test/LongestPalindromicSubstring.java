@@ -99,6 +99,11 @@ public class LongestPalindromicSubstring {
 	
 	public static void main(String[] args) {
 		
+		
+
+		PalindromeLengthPuzzle(new String["abacdfgdcaba".length()]);
+	   
+	 
 		LongestPalindromicSubstring lps = new LongestPalindromicSubstring();
 		/*lps.s = "abaaba";
 		lps.calcualte();
@@ -146,12 +151,44 @@ public class LongestPalindromicSubstring {
 		lps.s = "abacdedcaba";
 		
 		lps.calcualte();
-	
 	 
-	   
-	  
 	}
 	
+	
+    public static int PalindromeLengthPuzzle(String[] input1)
+    {
+    	// make a char array of first characters
+	        char[] A= new char[input1.length];
+	        for(int i=0;i<input1.length;i++) {
+	    		A[i] = input1[i].charAt(0);
+	    	}
+	    	String s = "#";
+	    	for(int i=0;i<A.length;i++) {
+	    		s =  s+A[i]+"#";
+	    	}
+	    	
+	    	
+	    	int max =0;
+	    	for(int c =0;c<s.length();c++)
+	    	{
+	    		int l = checkPalindrome(c,s);
+	    		max = Math.max(l,max);
+	    	}
+	    	 
+	    	 return max;  
+    	   
+    }
+    
+    private static int checkPalindrome(int c,String s) {
+    	int i;
+    	for(i=1;c+i< s.length() && c-i >=0;i++) {
+    		if(s.charAt(c-i)!=s.charAt(c+i)) {
+    			return i;
+    		}
+    	}
+    	return 1;
+    
+    }
 	
 	
 }

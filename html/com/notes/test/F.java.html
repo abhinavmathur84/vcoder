@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>F.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+F.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+ 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.LinkedList; 
+</span><span class="s0">import </span><span class="s1">java.util.Queue; 
+ 
+</span><span class="s0">public class </span><span class="s1">F { 
+ 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        System.out.println(</span><span class="s0">new </span><span class="s1">F().min()); 
+    } 
+     
+     
+    </span><span class="s0">char </span><span class="s1">s [] = {</span><span class="s2">'k'</span><span class="s1">,</span><span class="s2">'m'</span><span class="s1">,</span><span class="s2">'k'</span><span class="s1">,</span><span class="s2">'a'</span><span class="s1">,</span><span class="s2">'a'</span><span class="s1">,</span><span class="s2">'a'</span><span class="s1">,</span><span class="s2">'b'</span><span class="s1">,</span><span class="s2">'k'</span><span class="s1">,</span><span class="s2">'k'</span><span class="s1">,</span><span class="s2">'k'</span><span class="s1">,</span><span class="s2">'c'</span><span class="s1">,</span><span class="s2">'b'</span><span class="s1">,</span><span class="s2">'d'</span><span class="s1">,</span><span class="s2">'b'</span><span class="s1">,</span><span class="s2">'a'</span><span class="s1">}; 
+    </span><span class="s0">char </span><span class="s1">f [] = {</span><span class="s2">'a'</span><span class="s1">,</span><span class="s2">'b'</span><span class="s1">,</span><span class="s2">'c'</span><span class="s1">,</span><span class="s2">'d'</span><span class="s1">}; </span><span class="s3">// String to be found</span><span class="s1"> 
+    </span><span class="s0">int </span><span class="s1">m [] = </span><span class="s0">new int</span><span class="s1">[</span><span class="s4">255</span><span class="s1">]; </span><span class="s3">// Keeps The number of occurrence of particular character till now</span><span class="s1"> 
+ 
+    </span><span class="s0">int </span><span class="s1">min() { 
+        Queue&lt;E&gt; q = </span><span class="s0">new </span><span class="s1">LinkedList&lt;E&gt;(); </span><span class="s3">// max length of this list will be longest substring containing all the characters</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">t = </span><span class="s4">0</span><span class="s1">;  </span><span class="s3">// Stores how many character have been found till now</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">r = Integer.MAX_VALUE ; </span><span class="s3">// Answer:stores length of shortest substring containing all characters of s</span><span class="s1"> 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s4">0</span><span class="s1">;i&lt;s.length;i++) { 
+            </span><span class="s0">if</span><span class="s1">(m[s[i]]&gt;=</span><span class="s4">0</span><span class="s1">) { 
+                </span><span class="s0">if</span><span class="s1">(m[s[i]] == </span><span class="s4">0</span><span class="s1">) { 
+                    t ++; 
+                } 
+                q.add(</span><span class="s0">new </span><span class="s1">E(s[i], i)); 
+                m[s[i]]+=</span><span class="s4">1</span><span class="s1">; 
+            } 
+            </span><span class="s0">while</span><span class="s1">(t == f.length) { 
+                E e =  q.poll(); </span><span class="s3">// removes head</span><span class="s1"> 
+                </span><span class="s0">if</span><span class="s1">(e != </span><span class="s0">null</span><span class="s1">) { 
+                    r = i-e.x + </span><span class="s4">1 </span><span class="s1">&lt; r ? i-e.x +</span><span class="s4">1 </span><span class="s1">: r; 
+                    m[e.c]-=</span><span class="s4">1</span><span class="s1">; 
+                    </span><span class="s0">if</span><span class="s1">(m[e.c] == </span><span class="s4">0</span><span class="s1">) { 
+                        t --; </span><span class="s3">// decrease t only when the same character has no more occurrence in the orig array till now</span><span class="s1"> 
+                    } 
+                } 
+            } 
+        } 
+        </span><span class="s0">return </span><span class="s1">r; 
+    } 
+     
+    </span><span class="s3">/** 
+     * Stores position of the character c 
+     */</span><span class="s1"> 
+    </span><span class="s0">class </span><span class="s1">E { 
+        </span><span class="s0">public </span><span class="s1">E(</span><span class="s0">char </span><span class="s1">c, </span><span class="s0">int </span><span class="s1">x) { 
+            </span><span class="s0">this</span><span class="s1">.c = c;  
+            </span><span class="s0">this</span><span class="s1">.x = x; 
+        } 
+        </span><span class="s0">char </span><span class="s1">c; 
+        </span><span class="s0">int </span><span class="s1">x; 
+    }  
+     
+    </span><span class="s3">/** 
+     * Initializing map for default values 
+     */</span><span class="s1"> 
+    </span><span class="s0">public </span><span class="s1">F() { 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s4">0</span><span class="s1">;i&lt;m.length; i++) { 
+            m[i] = -</span><span class="s4">1</span><span class="s1">; 
+        } 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">char </span><span class="s1">i : f) { 
+            m[i]=</span><span class="s4">0</span><span class="s1">; 
+        } 
+    } 
+} 
+ 
+</span></pre>
+</body>
+</html>

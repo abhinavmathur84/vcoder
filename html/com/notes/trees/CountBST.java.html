@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>CountBST.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+CountBST.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.trees; 
+ 
+</span><span class="s0">public class </span><span class="s1">CountBST { 
+ 
+    </span><span class="s0">int </span><span class="s1">number; 
+    CountBST(</span><span class="s0">int </span><span class="s1">nu) { 
+        number = nu; 
+    } 
+     
+    </span><span class="s0">int </span><span class="s1">count(</span><span class="s0">int </span><span class="s1">n) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s2">1</span><span class="s1">) </span><span class="s0">return </span><span class="s2">1</span><span class="s1">; 
+        </span><span class="s0">if </span><span class="s1">(n == </span><span class="s2">2</span><span class="s1">) </span><span class="s0">return </span><span class="s2">2</span><span class="s1">; 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s2">3</span><span class="s1">) </span><span class="s0">return </span><span class="s2">5</span><span class="s1">; 
+        </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">int </span><span class="s1">t =</span><span class="s2">0</span><span class="s1">; 
+            </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">k=</span><span class="s2">1</span><span class="s1">;k&lt;n;k++) { 
+                t =t+ count(k)*count(n-k); 
+            } 
+            </span><span class="s0">return </span><span class="s1">t; 
+        } 
+    } 
+     
+    </span><span class="s3">/** 
+     * </span><span class="s4">@param </span><span class="s3">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+       CountBST cBast = </span><span class="s0">new </span><span class="s1">CountBST(</span><span class="s2">4</span><span class="s1">); 
+       System.out.println(cBast.count(</span><span class="s2">4</span><span class="s1">)); 
+ 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

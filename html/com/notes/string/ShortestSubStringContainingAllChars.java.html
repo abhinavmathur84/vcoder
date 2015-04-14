@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>ShortestSubStringContainingAllChars.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+ShortestSubStringContainingAllChars.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.string; 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.HashMap; 
+</span><span class="s0">import </span><span class="s1">java.util.HashSet; 
+</span><span class="s0">import </span><span class="s1">java.util.Map; 
+</span><span class="s0">import </span><span class="s1">java.util.Set; 
+ 
+</span><span class="s0">public class </span><span class="s1">ShortestSubStringContainingAllChars { 
+ 
+     
+    Map&lt;Character,Integer&gt; map; 
+    String s; 
+     
+    </span><span class="s2">//Approach</span><span class="s1"> 
+    </span><span class="s2">/** 
+     * Have 2 pointers i and j, both initialized to 0 
+     * Now start scanning the string 
+     * if chatAt(j) is one of the char in set, remove it from set it from set 
+     * and increment j++ 
+     * Now if at any point there are no more characters left, length = j-i and  
+     * check if this is smallest and update  
+     * make i=j and repeat same process 
+     *  
+     */</span><span class="s1"> 
+     
+    </span><span class="s0">int </span><span class="s1">scan(</span><span class="s0">final int </span><span class="s1">k) { 
+        </span><span class="s0">int </span><span class="s1">start = k; 
+        </span><span class="s0">int </span><span class="s1">end = k; 
+        </span><span class="s0">boolean </span><span class="s1">windowStarted = </span><span class="s0">false</span><span class="s1">; 
+        </span><span class="s0">int </span><span class="s1">n = s.length(); 
+        Map&lt;Character,Integer&gt; clone = </span><span class="s0">new </span><span class="s1">HashMap&lt;Character, Integer&gt;(map); 
+         
+        </span><span class="s0">while</span><span class="s1">(end&lt;n &amp;&amp; clone.size() &gt; </span><span class="s3">0</span><span class="s1">) { 
+            </span><span class="s0">char </span><span class="s1">c = s.charAt(end); 
+            </span><span class="s0">if</span><span class="s1">(clone.containsKey(c)) { 
+                windowStarted = </span><span class="s0">true</span><span class="s1">; 
+                clone.remove(c); 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s2">// not intresting char, just ignore</span><span class="s1"> 
+            } 
+            </span><span class="s0">if</span><span class="s1">(!windowStarted) { </span><span class="s2">// if no interesting char found</span><span class="s1"> 
+                start++; </span><span class="s2">// keep increasing i too</span><span class="s1"> 
+            } 
+            end++; 
+        } 
+        </span><span class="s0">return </span><span class="s1">end-start; 
+    } 
+     
+     
+    </span><span class="s0">void </span><span class="s1">calculate() { 
+        </span><span class="s0">int </span><span class="s1">minLen = Integer.MAX_VALUE; 
+        </span><span class="s0">int </span><span class="s1">start = </span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">int </span><span class="s1">end =</span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;s.length();) { 
+            </span><span class="s0">int </span><span class="s1">l = scan(i); 
+            </span><span class="s0">if</span><span class="s1">(l&lt;minLen) { 
+                start = i; 
+                end = i+l; 
+                minLen = l; 
+            } 
+            i = i+l; 
+        } 
+        System.out.println(minLen); 
+        System.out.println(start+</span><span class="s4">&quot;,&quot;</span><span class="s1">+end); 
+    } 
+     
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        ShortestSubStringContainingAllChars sc = </span><span class="s0">new </span><span class="s1">ShortestSubStringContainingAllChars(); 
+         
+        </span><span class="s0">char </span><span class="s1">s [] = {</span><span class="s4">'k'</span><span class="s1">,</span><span class="s4">'m'</span><span class="s1">,</span><span class="s4">'k'</span><span class="s1">,</span><span class="s4">'a'</span><span class="s1">,</span><span class="s4">'a'</span><span class="s1">,</span><span class="s4">'a'</span><span class="s1">,</span><span class="s4">'b'</span><span class="s1">,</span><span class="s4">'k'</span><span class="s1">,</span><span class="s4">'k'</span><span class="s1">,</span><span class="s4">'k'</span><span class="s1">,</span><span class="s4">'c'</span><span class="s1">,</span><span class="s4">'b'</span><span class="s1">,</span><span class="s4">'d'</span><span class="s1">,</span><span class="s4">'b'</span><span class="s1">,</span><span class="s4">'a'</span><span class="s1">}; 
+        String str = </span><span class="s0">new </span><span class="s1">String(s); 
+        sc.s =str; 
+        </span><span class="s0">char </span><span class="s1">f [] = {</span><span class="s4">'a'</span><span class="s1">,</span><span class="s4">'b'</span><span class="s1">,</span><span class="s4">'c'</span><span class="s1">,</span><span class="s4">'d'</span><span class="s1">}; 
+        sc.map = </span><span class="s0">new </span><span class="s1">HashMap&lt;Character, Integer&gt;(); 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s3">0</span><span class="s1">;i&lt;f.length;i++) { 
+            sc.map.put(f[i],</span><span class="s3">1</span><span class="s1">); 
+        } 
+         
+        sc.calculate(); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

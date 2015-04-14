@@ -21,48 +21,34 @@ public class StringPermutation {
 		}
    }
     
-    void permuteInPlace(int i) {
+    //IN PALCE PERMUTATION
+    void f(int k) {
+		if(k==arr.length - 1) {
+			print();
+		}
+		for(int i=k;i<arr.length;i++) {
+			swap(k,i);
+			f(k+1);
+			swap(k,i);
+		}
+	}
     
-    }
-    
+    private void print() {
+		for(int m : arr) {
+			System.out.print(m+", ");
+		}
+		System.out.println("");
+	}
+
+	private void swap(int k, int i) {
+		char temp = arr[k];
+		arr[k] = arr[i];
+		arr[i] = temp;
+	}
+    // END INPLACE PERMUTATION
     
    //
-   /**
-    * 
-    * 
-    * 
-	* abcd                                         c=0
-	* bacd
-	* bcad
-	* bcda  swap=1, till you reach length, index=0,c=1
-	* cbda
-	* cdba
-	* cdab                                        c=2
-	* dcab
-	* dacb
-	* dabc                                        c=3
-	* adbc
-	* abdc
-	* abcd                                        c=4, if start string index=1,swap=1
-	* acbd                                        
-    * acdb
-    * adcb
-    * adbc
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    * 
-    */
-    
-    
+
    
    
    

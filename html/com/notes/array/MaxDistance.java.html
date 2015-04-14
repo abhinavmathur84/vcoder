@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>MaxDistance.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MaxDistance.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.array; 
+ 
+</span><span class="s0">public class </span><span class="s1">MaxDistance { 
+ 
+    </span><span class="s0">int</span><span class="s1">[] A; 
+ 
+    </span><span class="s0">int</span><span class="s1">[] findMin() { 
+        </span><span class="s0">int</span><span class="s1">[] ret = </span><span class="s0">new int</span><span class="s1">[A.length]; 
+        ret[</span><span class="s2">0</span><span class="s1">] = A[</span><span class="s2">0</span><span class="s1">]; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">1</span><span class="s1">;i&lt;A.length;i++) { 
+            </span><span class="s0">if</span><span class="s1">(A[i]&lt;ret[i-</span><span class="s2">1</span><span class="s1">]) { 
+                ret[i] = A[i]; 
+            }</span><span class="s0">else </span><span class="s1">{ 
+                ret[i] = ret[i-</span><span class="s2">1</span><span class="s1">]; 
+            } 
+        } 
+         
+         
+        </span><span class="s0">return </span><span class="s1">ret; 
+    } 
+     
+    </span><span class="s0">int </span><span class="s1">findDist(</span><span class="s0">int</span><span class="s1">[] min,</span><span class="s0">int</span><span class="s1">[] max) { 
+        </span><span class="s0">int </span><span class="s1">ret =</span><span class="s2">0</span><span class="s1">; 
+        </span><span class="s0">int </span><span class="s1">n= A.length; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s2">0</span><span class="s1">,j=</span><span class="s2">0</span><span class="s1">;i&lt;n&amp;&amp;j&lt;n;){ 
+            </span><span class="s0">if</span><span class="s1">(min[i]&lt;max[j]){ 
+                ret = Math.max(ret, j-i); 
+                j++; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                i++; 
+            } 
+        } 
+        </span><span class="s0">return </span><span class="s1">ret; 
+         
+         
+    } 
+    </span><span class="s0">int</span><span class="s1">[] findMax() { 
+        </span><span class="s0">int</span><span class="s1">[] ret = </span><span class="s0">new int</span><span class="s1">[A.length]; 
+        ret[A.length-</span><span class="s2">1</span><span class="s1">] = A[A.length-</span><span class="s2">1</span><span class="s1">]; 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=A.length-</span><span class="s2">2</span><span class="s1">;i&gt;=</span><span class="s2">0</span><span class="s1">;i--) { 
+            </span><span class="s0">if</span><span class="s1">(A[i]&gt;ret[i+</span><span class="s2">1</span><span class="s1">]) { </span><span class="s3">// found a new max</span><span class="s1"> 
+                ret[i] = A[i]; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                ret[i] = ret[i+</span><span class="s2">1</span><span class="s1">]; 
+            } 
+        } 
+        </span><span class="s0">return </span><span class="s1">ret; 
+    } 
+ 
+     
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        MaxDistance md = </span><span class="s0">new </span><span class="s1">MaxDistance(); 
+        md.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s2">1</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">3</span><span class="s1">}; 
+        System.out.println(md.findDist(md.findMin(), md.findMax())); 
+         
+        md.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s2">3</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">1</span><span class="s1">}; 
+        System.out.println(md.findDist(md.findMin(), md.findMax())); 
+         
+        md.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s2">1000</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">3</span><span class="s1">}; 
+        System.out.println(md.findDist(md.findMin(), md.findMax())); 
+         
+        md.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s2">1000</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">2</span><span class="s1">,</span><span class="s2">3</span><span class="s1">,</span><span class="s2">2000</span><span class="s1">}; 
+        System.out.println(md.findDist(md.findMin(), md.findMax())); 
+         
+        md.A = </span><span class="s0">new int</span><span class="s1">[]{</span><span class="s2">1</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">1</span><span class="s1">,</span><span class="s2">1</span><span class="s1">}; 
+        System.out.println(md.findDist(md.findMin(), md.findMax())); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>PowerXToN.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+PowerXToN.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+</span><span class="s2">/** 
+ * Calculate x^n in log n time  
+ * </span><span class="s3">@author </span><span class="s2">abhmathu 
+ * 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">PowerXToN { 
+ 
+    </span><span class="s0">int </span><span class="s1">x; 
+    </span><span class="s0">int </span><span class="s1">n; 
+    
+    </span><span class="s0">public </span><span class="s1">PowerXToN(</span><span class="s0">int </span><span class="s1">x,</span><span class="s0">int </span><span class="s1">n) { 
+        </span><span class="s0">this</span><span class="s1">.x =x; 
+        </span><span class="s0">this</span><span class="s1">.n = n; 
+    } 
+     
+    </span><span class="s0">int </span><span class="s1">calculate(</span><span class="s0">int </span><span class="s1">num) { 
+        </span><span class="s0">if</span><span class="s1">(num ==</span><span class="s4">0 </span><span class="s1">) </span><span class="s0">return </span><span class="s4">1</span><span class="s1">; 
+        </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">int </span><span class="s1">temp = calculate(num/</span><span class="s4">2</span><span class="s1">); 
+            </span><span class="s0">if</span><span class="s1">(num%</span><span class="s4">2 </span><span class="s1">== </span><span class="s4">0</span><span class="s1">){ 
+                </span><span class="s0">return </span><span class="s1">temp*temp; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s0">return </span><span class="s1">temp*temp*x; 
+            } 
+        } 
+         
+    } 
+  
+    </span><span class="s2">/** 
+     * </span><span class="s3">@param </span><span class="s2">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+        
+       PowerXToN p = </span><span class="s0">new </span><span class="s1">PowerXToN(</span><span class="s4">2</span><span class="s1">,</span><span class="s4">5</span><span class="s1">); 
+       System.out.println(p.calculate(</span><span class="s4">5</span><span class="s1">)); 
+        
+ 
+    } 
+     
+     
+ 
+} 
+</span></pre>
+</body>
+</html>

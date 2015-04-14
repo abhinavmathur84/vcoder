@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>MaxSumSubmatrix.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MaxSumSubmatrix.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.test; 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">MaxSumSubmatrix { 
+ 
+    </span><span class="s0">int</span><span class="s1">[][] inputMatrix; 
+ 
+    </span><span class="s0">int </span><span class="s1">k; 
+ 
+    </span><span class="s2">// matrix to store sum of all s[i,j] for each j from 0-n-k+1</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[][] s; 
+ 
+    </span><span class="s2">// matrix to store the sum of matrix startin from i,j</span><span class="s1"> 
+    </span><span class="s0">int</span><span class="s1">[][] ks; 
+ 
+    </span><span class="s0">public </span><span class="s1">MaxSumSubmatrix(</span><span class="s0">int</span><span class="s1">[][] inp, </span><span class="s0">int </span><span class="s1">k) { 
+        </span><span class="s0">this</span><span class="s1">.k = k; 
+        inputMatrix = inp; 
+        </span><span class="s0">int </span><span class="s1">row = inputMatrix.length; 
+        </span><span class="s0">int </span><span class="s1">col = inputMatrix[</span><span class="s3">0</span><span class="s1">].length; 
+ 
+        s = </span><span class="s0">new int</span><span class="s1">[row][col - k + </span><span class="s3">1</span><span class="s1">]; 
+        ks = </span><span class="s0">new int</span><span class="s1">[row - k + </span><span class="s3">1</span><span class="s1">][col - k + </span><span class="s3">1</span><span class="s1">]; 
+ 
+    } 
+ 
+    </span><span class="s0">void </span><span class="s1">calculateS() { 
+        </span><span class="s0">int </span><span class="s1">n = inputMatrix.length; 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">int </span><span class="s1">t = </span><span class="s3">0</span><span class="s1">; 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; k; j++) { 
+                t = t + inputMatrix[i][j]; 
+            } 
+            s[i][</span><span class="s3">0</span><span class="s1">] = t; 
+        } 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">1</span><span class="s1">; j &lt; n - k + </span><span class="s3">1</span><span class="s1">; j++) { 
+                s[i][j] = s[i][j - </span><span class="s3">1</span><span class="s1">] + inputMatrix[i][j + k - </span><span class="s3">1</span><span class="s1">] 
+                    - inputMatrix[i][j - </span><span class="s3">1</span><span class="s1">]; 
+            } 
+        } 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; n; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; s[</span><span class="s3">0</span><span class="s1">].length; j++) { 
+                System.out.print(s[i][j] + </span><span class="s4">&quot;</span><span class="s0">\t</span><span class="s4">&quot;</span><span class="s1">); 
+            } 
+            System.out.println(); 
+        } 
+    } 
+ 
+    </span><span class="s0">static int </span><span class="s1">maxRow, maxCol; 
+ 
+    </span><span class="s0">public int </span><span class="s1">calculateKS() { 
+        </span><span class="s0">int </span><span class="s1">n = inputMatrix.length; 
+        </span><span class="s0">int </span><span class="s1">m = inputMatrix[</span><span class="s3">0</span><span class="s1">].length; 
+        </span><span class="s0">int </span><span class="s1">sum = </span><span class="s3">0</span><span class="s1">; 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; m - k + </span><span class="s3">1</span><span class="s1">; j++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">c = </span><span class="s3">0</span><span class="s1">; c &lt; k; c++) { 
+                sum = sum + s[c][j]; 
+            } 
+            ks[</span><span class="s3">0</span><span class="s1">][j] = sum; 
+            sum = </span><span class="s3">0</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">int </span><span class="s1">max = ks[</span><span class="s3">0</span><span class="s1">][</span><span class="s3">0</span><span class="s1">]; 
+ 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">1</span><span class="s1">; i &lt; n - k + </span><span class="s3">1</span><span class="s1">; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; m - k + </span><span class="s3">1</span><span class="s1">; j++) { 
+                ks[i][j] = ks[i - </span><span class="s3">1</span><span class="s1">][j] - s[i - </span><span class="s3">1</span><span class="s1">][j] + s[i + k - </span><span class="s3">1</span><span class="s1">][j]; 
+                </span><span class="s0">if </span><span class="s1">(max &lt; ks[i][j]) { 
+                    max = ks[i][j]; 
+                    maxRow = i; 
+                    maxCol = j; 
+                } 
+            } 
+        } 
+ 
+        System.out.println(</span><span class="s4">&quot;#############################################&quot;</span><span class="s1">); 
+        </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s1">; i &lt; ks.length; i++) { 
+            </span><span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s1">; j &lt; ks[</span><span class="s3">0</span><span class="s1">].length; j++) { 
+                System.out.print(ks[i][j] + </span><span class="s4">&quot;</span><span class="s0">\t</span><span class="s4">&quot;</span><span class="s1">); 
+            } 
+            System.out.println(); 
+        } 
+        </span><span class="s0">return </span><span class="s1">max; 
+    } 
+ 
+    </span><span class="s2">/** 
+     * </span><span class="s5">@param </span><span class="s2">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+ 
+        </span><span class="s0">int</span><span class="s1">[][] inpu = { { </span><span class="s3">1</span><span class="s1">, </span><span class="s3">0</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">4 </span><span class="s1">}, { </span><span class="s3">3</span><span class="s1">, </span><span class="s3">7</span><span class="s1">, </span><span class="s3">1</span><span class="s1">, </span><span class="s3">6 </span><span class="s1">}, { </span><span class="s3">5</span><span class="s1">, </span><span class="s3">8</span><span class="s1">, </span><span class="s3">11</span><span class="s1">, </span><span class="s3">6 </span><span class="s1">}, 
+            { </span><span class="s3">9</span><span class="s1">, </span><span class="s3">12</span><span class="s1">, </span><span class="s3">2</span><span class="s1">, </span><span class="s3">1 </span><span class="s1">} }; 
+        </span><span class="s0">int </span><span class="s1">k = </span><span class="s3">2</span><span class="s1">; 
+        MaxSumSubmatrix mat = </span><span class="s0">new </span><span class="s1">MaxSumSubmatrix(inpu, </span><span class="s3">2</span><span class="s1">); 
+        mat.calculateS(); 
+        System.out.println(mat.calculateKS()); 
+        System.out.println(mat.maxRow + </span><span class="s4">&quot;</span><span class="s0">\t</span><span class="s4">&quot; </span><span class="s1">+ mat.maxCol); 
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>

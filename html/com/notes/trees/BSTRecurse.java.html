@@ -1,0 +1,190 @@
+<html>
+<head>
+<title>BSTRecurse.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+.s5 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+BSTRecurse.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+
+<span class="s0">package </span><span class="s1">com.notes.trees; 
+ 
+</span><span class="s2">/** 
+ * Implement a BST  
+ * </span><span class="s3">@author </span><span class="s2">abhmathu 
+ * 
+ */</span><span class="s1"> 
+</span><span class="s0">public class </span><span class="s1">BSTRecurse { 
+ 
+    Node root; 
+  
+    </span><span class="s0">class </span><span class="s1">Node { 
+        </span><span class="s0">public </span><span class="s1">Node(</span><span class="s0">int </span><span class="s1">i) { 
+           data = i; 
+        } 
+        </span><span class="s0">int </span><span class="s1">data; 
+        Node left; 
+        Node right; 
+         
+        @Override 
+        </span><span class="s0">public </span><span class="s1">String toString() { 
+            </span><span class="s0">return </span><span class="s1">data+</span><span class="s4">&quot;&quot;</span><span class="s1">; 
+        } 
+    } 
+     
+    </span><span class="s0">public void </span><span class="s1">add(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">if</span><span class="s1">(root == </span><span class="s0">null</span><span class="s1">) { 
+            root = </span><span class="s0">new </span><span class="s1">Node(i); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            add(i,root); 
+        } 
+    } 
+    
+    </span><span class="s0">private  void </span><span class="s1">add(</span><span class="s0">int </span><span class="s1">i,Node parent) { 
+        </span><span class="s0">if</span><span class="s1">(i&lt;=parent.data) { 
+            addLeft(i,parent.left,parent); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            addRight(i,parent.right,parent); 
+        } 
+    } 
+     
+    </span><span class="s0">private void </span><span class="s1">addLeft(</span><span class="s0">int </span><span class="s1">i,Node n,Node parent) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s0">null</span><span class="s1">) { 
+            parent.left = </span><span class="s0">new </span><span class="s1">Node(i); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            add(i,n); 
+        } 
+    } 
+     
+    </span><span class="s0">private void </span><span class="s1">addRight(</span><span class="s0">int </span><span class="s1">i,Node n, Node parent) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s0">null</span><span class="s1">) { 
+            parent.right = </span><span class="s0">new </span><span class="s1">Node(i); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            add(i,n); 
+        } 
+    } 
+     
+    </span><span class="s0">public </span><span class="s1">Node find(</span><span class="s0">int </span><span class="s1">i) { 
+        </span><span class="s0">return </span><span class="s1">find(i,root); 
+    } 
+     
+    </span><span class="s0">private </span><span class="s1">Node find(</span><span class="s0">int </span><span class="s1">i, Node n) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return null</span><span class="s1">; 
+        </span><span class="s0">if</span><span class="s1">(i == n.data) </span><span class="s0">return </span><span class="s1">n; 
+        </span><span class="s0">if</span><span class="s1">(i&lt;n.data) </span><span class="s0">return </span><span class="s1">find(i,n.left); 
+        </span><span class="s0">else return </span><span class="s1">find(i,n.right); 
+    } 
+       
+    </span><span class="s0">public void </span><span class="s1">inOrder() { 
+        inOrder(root); 
+    } 
+     
+    </span><span class="s0">public void </span><span class="s1">inOrder(Node n) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return</span><span class="s1">; 
+        inOrder(n.left); 
+        System.out.print(n.data+</span><span class="s4">&quot; &quot;</span><span class="s1">); 
+        inOrder(n.right); 
+    } 
+   
+    </span><span class="s0">public void </span><span class="s1">delete(</span><span class="s0">int </span><span class="s1">i) { 
+        delete(i,root,</span><span class="s0">null</span><span class="s1">); 
+    } 
+     
+    </span><span class="s0">private void </span><span class="s1">delete(</span><span class="s0">int </span><span class="s1">i,Node n,Node parent) { 
+        </span><span class="s0">if</span><span class="s1">(n == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return</span><span class="s1">; 
+        </span><span class="s0">else if</span><span class="s1">(i&lt;n.data) delete(i,n.left,n); 
+        </span><span class="s0">else if</span><span class="s1">(i&gt; n.data) delete(i,n.right,n); 
+        </span><span class="s0">else if</span><span class="s1">(parent == </span><span class="s0">null</span><span class="s1">) { </span><span class="s2">// deleting root</span><span class="s1"> 
+            </span><span class="s0">if</span><span class="s1">(n.left !=</span><span class="s0">null</span><span class="s1">) { 
+                Node rightMost = findRightMost(n.left); 
+                rightMost.right = n.right; 
+                root = n.left; 
+            } </span><span class="s0">else </span><span class="s1">{ 
+                </span><span class="s0">if</span><span class="s1">(n.right !=</span><span class="s0">null</span><span class="s1">) { 
+                    Node leftMost = findLeftMost(n.right); 
+                    leftMost.left = n.left; 
+                    root = n.right; 
+                } 
+            } 
+            </span><span class="s0">if</span><span class="s1">(n.left == </span><span class="s0">null </span><span class="s1">&amp;&amp; n.right == </span><span class="s0">null</span><span class="s1">) { 
+                root = </span><span class="s0">null</span><span class="s1">; 
+            } 
+        } 
+        </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">if</span><span class="s1">(parent.left!=</span><span class="s0">null </span><span class="s1">&amp;&amp; parent.left.data == i) { 
+                    </span><span class="s0">if</span><span class="s1">(n.left == </span><span class="s0">null </span><span class="s1">&amp;&amp; n.right == </span><span class="s0">null</span><span class="s1">) { </span><span class="s2">// deleting the left child</span><span class="s1"> 
+                    parent.left = </span><span class="s0">null</span><span class="s1">; 
+                } </span><span class="s0">else if</span><span class="s1">(n.left !=</span><span class="s0">null</span><span class="s1">) { 
+                    Node rightMost = findRightMost(n.left); 
+                    </span><span class="s2">// make the right subtree of n as right subtree of rightMost child of n</span><span class="s1"> 
+                    rightMost.right = n.right;  
+                    parent.left = n.left; 
+                } </span><span class="s0">else if</span><span class="s1">(n.right !=</span><span class="s0">null</span><span class="s1">) { 
+                    Node leftMost = findLeftMost(n.right); 
+                    leftMost.left = n.left; 
+                    parent.left = n.right; 
+                } 
+            } </span><span class="s0">else  if</span><span class="s1">(parent.right !=</span><span class="s0">null </span><span class="s1">&amp;&amp; parent.right.data == i){ 
+                    </span><span class="s0">if</span><span class="s1">(n.left == </span><span class="s0">null </span><span class="s1">&amp;&amp; n.right == </span><span class="s0">null</span><span class="s1">) { </span><span class="s2">// deleting the right child</span><span class="s1"> 
+                    parent.right = </span><span class="s0">null</span><span class="s1">; 
+                } </span><span class="s0">else if</span><span class="s1">(n.left !=</span><span class="s0">null</span><span class="s1">) { 
+                    Node rightMost = findRightMost(n.left); 
+                    rightMost.right = n.right; 
+                    parent.right = n.left; 
+                } </span><span class="s0">else if</span><span class="s1">(n.right !=</span><span class="s0">null</span><span class="s1">) { 
+                    Node leftMost = findLeftMost(n.right); 
+                    leftMost.left = n.left; 
+                    parent.right = n.right; 
+                } 
+            } 
+        } 
+    } 
+     
+    </span><span class="s0">private </span><span class="s1">Node findLeftMost(Node right) { 
+       </span><span class="s0">if</span><span class="s1">(right == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return null</span><span class="s1">; 
+       </span><span class="s0">if</span><span class="s1">(right.left == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return </span><span class="s1">right; 
+       </span><span class="s0">else return </span><span class="s1">findLeftMost(right.left); 
+    } 
+ 
+    </span><span class="s0">private </span><span class="s1">Node findRightMost(Node left) { 
+        </span><span class="s0">if</span><span class="s1">(left == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return null</span><span class="s1">; 
+        </span><span class="s0">if</span><span class="s1">(left.right == </span><span class="s0">null</span><span class="s1">) </span><span class="s0">return </span><span class="s1">left; 
+        </span><span class="s0">else return </span><span class="s1">findRightMost(left.right); 
+    } 
+ 
+    </span><span class="s2">/** 
+     * </span><span class="s3">@param </span><span class="s2">args 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static void </span><span class="s1">main(String[] args) { 
+       </span><span class="s0">int </span><span class="s1">[] numbers = {</span><span class="s5">15</span><span class="s1">, </span><span class="s5">27</span><span class="s1">, </span><span class="s5">19</span><span class="s1">, </span><span class="s5">67</span><span class="s1">, </span><span class="s5">10</span><span class="s1">, </span><span class="s5">3</span><span class="s1">, </span><span class="s5">87</span><span class="s1">, </span><span class="s5">65</span><span class="s1">, </span><span class="s5">90</span><span class="s1">, </span><span class="s5">54</span><span class="s1">, </span><span class="s5">32</span><span class="s1">, </span><span class="s5">31</span><span class="s1">, </span><span class="s5">29</span><span class="s1">, </span><span class="s5">54</span><span class="s1">, </span><span class="s5">35</span><span class="s1">, </span><span class="s5">10</span><span class="s1">, </span><span class="s5">87</span><span class="s1">, </span><span class="s5">65</span><span class="s1">, </span><span class="s5">90</span><span class="s1">, </span><span class="s5">65</span><span class="s1">, </span><span class="s5">43</span><span class="s1">, </span><span class="s5">96</span><span class="s1">, </span><span class="s5">67</span><span class="s1">, </span><span class="s5">54</span><span class="s1">, </span><span class="s5">98</span><span class="s1">, </span><span class="s5">65</span><span class="s1">}; 
+         
+        BSTRecurse  b = </span><span class="s0">new </span><span class="s1">BSTRecurse(); 
+        </span><span class="s0">for</span><span class="s1">(</span><span class="s0">int </span><span class="s1">i=</span><span class="s5">0</span><span class="s1">;i&lt;numbers.length;i++) { 
+            b.add(numbers[i]); 
+        } 
+        b.inOrder(); 
+        System.out.println(); 
+        System.out.println(b.root); 
+        b.delete(</span><span class="s5">15</span><span class="s1">); 
+        b.inOrder(); 
+        System.out.println(); 
+         
+    } 
+ 
+} 
+</span></pre>
+</body>
+</html>
